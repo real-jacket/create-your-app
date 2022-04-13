@@ -1,0 +1,22 @@
+{
+  "name": "@rjkt/create-your-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "creat-your-app": "./bin/cya.js",
+    "cya": "./bin/cya.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "inquirer": "^8.2.2"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6"
+  }
+}
