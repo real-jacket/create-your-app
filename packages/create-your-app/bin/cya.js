@@ -11,8 +11,8 @@ inquire
       type: 'input',
       name: 'name',
       message: 'Your name',
-      default: 'cya app',
-    },
+      default: 'cya app'
+    }
   ])
   .then((answers) => {
     const destUrl = path.join(__dirname, '../../react-template/template');

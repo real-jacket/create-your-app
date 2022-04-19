@@ -3,6 +3,9 @@ node_modules
 .DS_Store
 dist
 
+# example 
+example
+
 
 # debug
 *.log
