@@ -2,10 +2,9 @@ const inquire = require('inquirer');
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { exec } = require('shelljs');
 const os = require('os');
-const spawn = require('cross-spawn');
-const { NpmRegistry } = require('./constants');
+const { tryGitInit, tryGitCommit, createGitIgnore } = require('./git');
+const { createPackageJson, pkgAdd, pkgRemove } = require('./pkg');
 
 /**
  * 项目配置
@@ -180,68 +179,6 @@ async function checkDir(targetDir, force) {
   return targetDir;
 }
 
-/**
- * 创建基础的 package.json
- * @param {string} rootApp
- * @param {string} componentName
- */
-function createPackageJson(rootApp, appName) {
-  const userNameGit = exec('git config user.name', {
-    silent: true
-  }).stdout.trim();
-  const userEmail = exec('git config user.email', {
-    silent: true
-  }).stdout.trim();
-  const userNameNpm = exec(`npm whoami --registry=${NpmRegistry}`, {
-    silent: true
-  }).stdout.trim();
-
-  // 初始化基础的 package.json
-
-  const pkgJson = {
-    name: appName,
-    version: '1.0.0',
-    author: `${userNameGit} <${userEmail}>`,
-    maitainers: [userNameNpm],
-    description: '',
-    keywords: [],
-    license: 'MIT',
-    repository: {
-      type: 'git',
-      url: ''
-    }
-  };
-
-  fs.writeFileSync(
-    path.join(rootApp, 'package.json'),
-    JSON.stringify(pkgJson, null, 2) + os.EOL
-  );
-}
-
-/**
- *
- * @param {Array} deps 需要安装的依赖
- * @param {Function} error 安装失败的错误回调
- * @param {Array} options
- */
-function pkgAdd(deps, error, options = []) {
-  console.log(`Install ${chalk.cyan(deps.join(','))} ...`);
-
-  const child = spawn.sync(
-    'yarn',
-    ['add', ...deps, ...options, '--registry', NpmRegistry],
-    {
-      stdio: 'inherit'
-    }
-  );
-
-  if (child.status !== 0) {
-    console.log(chalk.red(`Error: yarn add ${deps.join('.')} error`));
-    typeof error === 'function' && error();
-    process.exit(1);
-  }
-}
-
 module.exports = async function (name, options) {
   // 首先确定输入目录名
   const { appName } = await inquire.prompt({
@@ -271,13 +208,15 @@ module.exports = async function (name, options) {
   let templateToInstall = template;
 
   // 本地路径：统一转化成绝对路径
-  if (template.match(/^(.{1,2}?\/|file:).*/)) {
+  if (template.match(/^((.{1,2})?\/|file:).*/)) {
+    console.log('xxxx');
     const localTemplatePath = path.resolve(cwd, template);
     console.log('localTemplatePath: ', localTemplatePath);
 
     templateToInstall = `file:${localTemplatePath}`;
 
     const { name } = require(path.join(localTemplatePath, 'package.json'));
+    console.log('name: ', name);
     templateName = name;
   }
   console.log('templateName: ', templateName);
@@ -380,5 +319,46 @@ module.exports = async function (name, options) {
     );
 
     process.exit(1);
+  }
+
+  // create .ignore
+  console.log('\nInitialized .gitignore file.');
+  createGitIgnore(rootApp);
+
+  // Initialize git repo
+  let initializedGit = false;
+  if (tryGitInit()) {
+    initializedGit = true;
+    console.log();
+    console.log('Initialized a git repository.');
+  }
+
+  // Install additional template dependencies, if present
+  const dependenciesToInstall = Object.entries({
+    ...templatePackage.dependencies,
+    ...templatePackage.devDependencies
+  });
+
+  if (dependenciesToInstall.length) {
+    const deps = dependenciesToInstall.map(
+      ([dependency, version]) => `${dependency}@${version}`
+    );
+
+    pkgAdd(deps, () => {
+      console.log(chalk.red('Install template dependencies failed'));
+      process.exit(1);
+    });
+  }
+
+  // remove template pkg
+  pkgRemove([templateName], () => {
+    console.log(chalk.red('Remove template pkg failed'));
+    process.exit(1);
+  });
+
+  // Create git commit if git repo was initialized
+  if (initializedGit && tryGitCommit()) {
+    console.log();
+    console.log('\nCreated git commit.');
   }
 };

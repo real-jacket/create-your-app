@@ -8,8 +8,8 @@
     "commit": "git cz"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "real-jacket",
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
