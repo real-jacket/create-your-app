@@ -49,7 +49,7 @@ function tryGitCommit() {
     console.log('\nGit commit:');
     console.log(' git add -A');
     execSync('git add -A', { stdio: 'inherit' });
-    console.log(' git commit -m');
+    console.log(' git commit -m "feat(chore): init project"');
     execSync('git commit -m "feat(chore): init project"', {
       stdio: 'inherit'
     });

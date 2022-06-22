@@ -12,4 +12,4 @@
 2. 在项目 `create-your-app/package/create-your-app`目录下使用 `yarn link` 或 `npm link` 链接到全局。
 3. 获取内置模板`react-template` 的本地路径，使用命令 `cya create -t <local-template-path> <project-name>`进行项目的创建测试。
 
-注意：在 Linux 与 macos 系统下还需要修改执行命令文件的权限为 775,`chmod 755 cya.js`
+注意：在 Linux 与 Macos 系统下还需要修改执行命令文件的权限为 775,`chmod 755 cya.js`

@@ -3,6 +3,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const os = require('os');
+const camelcase = require('camelcase');
+const replace = require('replace-in-file');
 const { tryGitInit, tryGitCommit, createGitIgnore } = require('./git');
 const { createPackageJson, pkgAdd, pkgRemove } = require('./pkg');
 
@@ -179,6 +181,25 @@ async function checkDir(targetDir, force) {
   return targetDir;
 }
 
+function updateFiles(rootApp, appName) {
+  const appPascalName = camelcase(appName, { pascalCase: true });
+
+  try {
+    replace.sync({
+      files: [
+        path.join(rootApp, 'src', '**/*'),
+        path.join(rootApp, 'public', '/*'),
+        path.join(rootApp, 'README.md')
+      ],
+      from: [/Template/g, /<%= appName %>/g],
+      to: [appPascalName, appName],
+      ignore: ['**/mode_modules/**']
+    });
+  } catch (error) {
+    console.log(chalk.red('更新 Template 内容出错了'));
+  }
+}
+
 module.exports = async function (name, options) {
   // 首先确定输入目录名
   const { appName } = await inquire.prompt({
@@ -324,6 +345,9 @@ module.exports = async function (name, options) {
   // create .ignore
   console.log('\nInitialized .gitignore file.');
   createGitIgnore(rootApp);
+
+  // update files
+  updateFiles(rootApp, appName);
 
   // Initialize git repo
   let initializedGit = false;
