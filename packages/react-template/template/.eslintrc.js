@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
+    // 'plugin:react/jsx-runtime',
     // 'plugin:@typescript-eslint/recommended',
     // 1. 接入 prettier 的规则
     'prettier',
@@ -19,13 +19,13 @@ module.exports = {
     }
   },
   // parser: '@typescript-eslint/parser',
-  // parserOptions: {
-  //   ecmaFeatures: {
-  //     jsx: true
-  //   },
-  //   ecmaVersion: 'latest',
-  //   sourceType: 'module'
-  // },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
   // 2. 加入 prettier 的 eslint 插件
   plugins: [
     'react',
