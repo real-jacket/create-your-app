@@ -13,10 +13,6 @@ const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 // 分析 打包内容的
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-// 手写的 plugin
-const HelloWordPlugin = require('../plugins/Hello');
-const FileListPlugin = require('../plugins/FileList');
-
 const webpackConfig = merge(common, {
   // mode: 'production',
   // devtool: 'source-map',
@@ -81,17 +77,6 @@ const webpackConfig = merge(common, {
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
-      },
-      // 自定义 loader
-      {
-        test: /\.hello$/i,
-        exclude: /node_modules/,
-        use: ['hello-loader']
-      },
-      {
-        test: /\.md$/i,
-        exclude: /node_modules/,
-        use: ['md-loader']
       }
     ]
   },
@@ -105,8 +90,6 @@ const webpackConfig = merge(common, {
       filename: 'css/[name].[contenthash:8].css'
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new HelloWordPlugin(),
-    new FileListPlugin(),
     // dll 打包
     new DllReferencePlugin({
       manifest: require('../dist/react.manifest.json')

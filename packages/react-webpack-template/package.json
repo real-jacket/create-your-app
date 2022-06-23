@@ -1,0 +1,28 @@
+{
+  "name": "@rjkt/cya-react-webpack-template",
+  "version": "0.0.1",
+  "author": "kete <jack.ke@ximalaya.com>",
+  "keywords": [
+    "template",
+    "react",
+    "webpack",
+    "create-your-app"
+  ],
+  "description": "The base template for react in Create your app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/real-jacket/create-your-app.git",
+    "directory": "packages/react-webpack-template"
+  },
+  "bugs": {
+    "url": "https://github.com/real-jacket/create-your-app/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "template",
+    "template.json"
+  ]
+}
