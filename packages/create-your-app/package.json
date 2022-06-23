@@ -1,18 +1,34 @@
 {
   "name": "@rjkt/create-your-app",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "author": "kete <jack.ke@ximalaya.com>",
+  "keywords": [
+    "cli",
+    "web",
+    "create-your-app",
+    "cya"
+  ],
+  "description": "A cli tool for creating your web app",
   "bin": {
-    "creat-your-app": "./bin/cya.js",
+    "create-your-app": "./bin/cya.js",
     "cya": "./bin/cya.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/real-jacket/create-your-app.git",
+    "directory": "packages/create-your-app"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/real-jacket/create-your-app/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "src",
+    "bin"
+  ],
   "dependencies": {
     "camelcase": "^6.2.0",
     "chalk": "^4.1.0",

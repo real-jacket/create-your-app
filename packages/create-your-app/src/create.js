@@ -181,6 +181,11 @@ async function checkDir(targetDir, force) {
   return targetDir;
 }
 
+/**
+ * 替换模板里内置的应用名称
+ * @param {string} rootApp 项目路径
+ * @param {string} appName 应用名称
+ */
 function updateFiles(rootApp, appName) {
   const appPascalName = camelcase(appName, { pascalCase: true });
 
@@ -225,12 +230,11 @@ module.exports = async function (name, options) {
   // 模版名称
   const { template } = options;
 
-  let templateName = template;
+  let templateName = template || '@rjkt/cya-react-template';
   let templateToInstall = template;
 
   // 本地路径：统一转化成绝对路径
   if (template.match(/^((.{1,2})?\/|file:).*/)) {
-    console.log('xxxx');
     const localTemplatePath = path.resolve(cwd, template);
     console.log('localTemplatePath: ', localTemplatePath);
 
