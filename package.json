@@ -1,16 +1,18 @@
 {
   "name": "@rjkt/create-your-app-monorepo",
   "private": true,
-  "description": "",
+  "author": "kete <jack.ke@ximalaya.com>",
   "scripts": {
     "prepare": "husky install",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "bump": "changeset version",
+    "changeset": "changeset",
     "commit": "git cz"
   },
-  "keywords": [],
-  "author": "real-jacket",
-  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
+    "@changesets/cli": "^2.23.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@typescript-eslint/eslint-plugin": "^5.20.0",

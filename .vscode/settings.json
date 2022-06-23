@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["maitainers", "pnpm", "rjkt"]
+  "cSpell.words": [
+    "camelcase",
+    "changesets",
+    "commitlint",
+    "kete",
+    "maitainers",
+    "pnpm",
+    "rjkt"
+  ]
 }
