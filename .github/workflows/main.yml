@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 env:
   CI: true
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -18,9 +20,13 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
-      - name: install pnpm
-        run: npm i pnpm@latest -g
+          node-version: 16.x
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
       - name: Setup npmrc
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - name: setup pnpm config
@@ -30,9 +36,9 @@ jobs:
       - name: create and publish versions
         uses: changesets/action@master
         with:
-          version: pnpm ci:version
+          version: pnpm bump
           commit: "chore: update versions"
           title: "chore: update versions"
-          publish: pnpm ci:publish
+          publish: pnpm -r publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

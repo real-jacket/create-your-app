@@ -60,7 +60,7 @@ importers:
       replace-in-file: registry.npmmirror.com/replace-in-file/6.3.5
       shelljs: 0.8.5
 
-  packages/react-template:
+  packages/react-webpack-template:
     specifiers: {}
 
 packages:
