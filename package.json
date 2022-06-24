@@ -1,15 +1,16 @@
 {
   "name": "@rjkt/create-your-app-monorepo",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "docs"
+  ],
   "author": "kete <jack.ke@ximalaya.com>",
   "scripts": {
     "prepare": "husky install",
     "bump": "changeset version",
     "changeset": "changeset",
     "commit": "git cz"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.5",
