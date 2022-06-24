@@ -9,7 +9,7 @@ module.exports = merge(common, {
     rules: [
       // 处理 图片
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(svg|png|jpe?g|gif)$/i,
         use: 'file-loader'
       },
       // 处理 scss

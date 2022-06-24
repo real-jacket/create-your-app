@@ -49,7 +49,7 @@ const webpackConfig = merge(common, {
     rules: [
       // 处理 图片
       {
-        test: /\.(png|jpg|gif)$/i,
+        test: /\.(svg|png|jpg|gif)$/i,
         use: [
           {
             loader: 'url-loader',

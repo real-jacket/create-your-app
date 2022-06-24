@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Cat from './components/Cat.js';
+import Cat from './components/Cat/index.js';
 
 function App() {
   const [count, setCount] = useState(0);

@@ -230,7 +230,7 @@ module.exports = async function (name, options) {
   // 模版名称
   const { template } = options;
 
-  let templateName = template || '@rjkt/cya-react-template';
+  let templateName = template || '@rjkt/cya-react-webpack-template';
   let templateToInstall = template;
 
   // 本地路径：统一转化成绝对路径
