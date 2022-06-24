@@ -9,6 +9,9 @@
     "create-your-app"
   ],
   "description": "The base template for react in Create your app",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/real-jacket/create-your-app.git",

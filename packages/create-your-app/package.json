@@ -13,6 +13,9 @@
     "create-your-app": "./bin/cya.js",
     "cya": "./bin/cya.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/real-jacket/create-your-app.git",
