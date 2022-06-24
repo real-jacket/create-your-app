@@ -29,10 +29,26 @@ jobs:
           run_install: false
       # - name: Setup npmrc
       #   run: echo "@rjkt://registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-      - name: setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-      - name: install dependencies
+      # - name: setup pnpm config
+      #   run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+      # - name: install dependencies
+      #   run: pnpm install
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
         run: pnpm install
+        
       - name: create and publish versions
         uses: changesets/action@master
         with:
