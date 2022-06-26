@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "target": "es6",
     "jsx": "react",
     "paths": {
-      "src": ["src"],
-      "assets": ["src/assets"]
+      "@": ["./src"],
+      "assets": ["./src/assets"]
     }
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
