@@ -8,9 +8,10 @@
   "author": "kete <jack.ke@ximalaya.com>",
   "scripts": {
     "prepare": "husky install",
-    "bump": "changeset version",
+    "ci:version": "changeset version",
     "changeset": "changeset",
-    "commit": "git cz"
+    "commit": "git cz",
+    "ci:publish": "changeset publish"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.5",
