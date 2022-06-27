@@ -1,5 +1,11 @@
 # @rjkt/create-your-app
 
+## 0.0.4
+
+### Patch Changes
+
+- [`9f33bc13`](https://github.com/real-jacket/create-your-app/commit/9f33bc1348625b0921d2ed0162bbd71c5b7b03d7) Thanks [@real-jacket](https://github.com/real-jacket)! - fix: make husky hook executable
+
 ## 0.0.3
 
 ### Patch Changes
