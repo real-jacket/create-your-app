@@ -231,7 +231,7 @@ module.exports = async function (name, options) {
   const { template } = options;
 
   let templateName = template || '@rjkt/cya-react-webpack-template';
-  let templateToInstall = template;
+  let templateToInstall = template || '@rjkt/cya-react-webpack-template';
 
   // 本地路径：统一转化成绝对路径
   if (template.match(/^((.{1,2})?\/|file:).*/)) {

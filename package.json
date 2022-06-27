@@ -5,7 +5,7 @@
     "packages/*",
     "docs"
   ],
-  "author": "kete <jack.ke@ximalaya.com>",
+  "author": "real-jacket <1762982273@qq.com>",
   "scripts": {
     "prepare": "husky install",
     "ci:version": "changeset version",

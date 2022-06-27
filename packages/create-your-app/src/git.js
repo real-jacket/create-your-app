@@ -2,10 +2,27 @@ const chalk = require('chalk');
 const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
+const ora = require('ora');
 
 function isInGitRepository() {
   try {
     execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+    // 判断目录是否在git仓库的根目录下
+    const gitPath = execSync('git rev-parse --show-toplevel').toString().trim();
+    const cwd = process.cwd();
+    if (gitPath !== cwd) {
+      console.log(chalk.red('不建议在一个 git 仓库子目录创建项目'));
+      console.log('');
+      console.log('撤销已创建文件');
+      const spinner = ora('Loading unicorns').start();
+      spinner.color = 'yellow';
+      spinner.text = '...';
+      process.chdir('../');
+      fs.removeSync(cwd);
+      spinner.stop();
+      spinner.succeed('撤销成功');
+      process.exit(1);
+    }
     return true;
   } catch (e) {
     return false;

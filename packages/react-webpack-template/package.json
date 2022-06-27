@@ -1,7 +1,10 @@
 {
   "name": "@rjkt/cya-react-webpack-template",
   "version": "0.0.2",
-  "author": "kete <jack.ke@ximalaya.com>",
+  "author": "real-jacket <1762982273@qq.com>",
+  "maintainers": [
+    "real-jacket"
+  ],
   "keywords": [
     "template",
     "react",
