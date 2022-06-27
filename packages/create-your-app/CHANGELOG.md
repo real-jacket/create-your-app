@@ -1,5 +1,13 @@
 # @rjkt/create-your-app
 
+## 0.0.3
+
+### Patch Changes
+
+- [`aee02c7c`](https://github.com/real-jacket/create-your-app/commit/aee02c7cadc79b8c3f16b7ff662c5d8def498ac7) Thanks [@real-jacket](https://github.com/real-jacket)! - add check in sub git dir
+
+* [`aee02c7c`](https://github.com/real-jacket/create-your-app/commit/aee02c7cadc79b8c3f16b7ff662c5d8def498ac7) Thanks [@real-jacket](https://github.com/real-jacket)! - fix template default
+
 ## 0.0.2
 
 ### Patch Changes
