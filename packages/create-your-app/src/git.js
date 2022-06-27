@@ -112,9 +112,41 @@ function createGitIgnore(appPath) {
     );
   }
 }
+/**
+ * 给 husky 相关 hooks 添加可执行权限
+ * @param {string} hookPath
+ */
+function makeHookExecutable(hookPath) {
+  const files = fs.readdirSync(hookPath);
+  let error = false;
+  files.forEach((file) => {
+    const filePath = path.join(hookPath, file);
+    if (fs.statSync(filePath).isFile()) {
+      try {
+        fs.chmodSync(filePath, '755');
+      } catch (err) {
+        console.log(
+          chalk.red(`Failed to set executable permissions for ${filePath}`)
+        );
+        error = true;
+      }
+    }
+  });
+
+  if (error) {
+    console.log(
+      chalk.red(
+        'Failed to set executable permissions for some hooks.\n' +
+          'Please set them manually.'
+      )
+    );
+    process.exit(1);
+  }
+}
 
 module.exports = {
   tryGitInit,
   tryGitCommit,
-  createGitIgnore
+  createGitIgnore,
+  makeHookExecutable
 };

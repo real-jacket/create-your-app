@@ -5,7 +5,12 @@ const chalk = require('chalk');
 const os = require('os');
 const camelcase = require('camelcase');
 const replace = require('replace-in-file');
-const { tryGitInit, tryGitCommit, createGitIgnore } = require('./git');
+const {
+  tryGitInit,
+  tryGitCommit,
+  createGitIgnore,
+  makeHookExecutable
+} = require('./git');
 const { createPackageJson, pkgAdd, pkgRemove } = require('./pkg');
 
 /**
@@ -383,6 +388,9 @@ module.exports = async function (name, options) {
     console.log(chalk.red('Remove template pkg failed'));
     process.exit(1);
   });
+
+  // Make hook executable
+  makeHookExecutable(path.join(process.cwd(), '.husky'));
 
   // Create git commit if git repo was initialized
   if (initializedGit && tryGitCommit()) {
