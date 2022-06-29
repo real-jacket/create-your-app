@@ -8,7 +8,10 @@ const cliList = [
   {
     name: 'vue',
     description: 'create your new vue app with vite',
-    cliName: 'npm create vite@latest'
+    cliName:
+      getNpmVersion() >= 7
+        ? 'npm create vite@latest my-vue-app -- --template vue'
+        : 'npm create vite@latest my-vue-app --template vue'
   },
   {
     name: 'react',
@@ -16,6 +19,11 @@ const cliList = [
     cliName: 'npx create-react-app@latest'
   }
 ];
+
+// 获取 npm 版本号
+function getNpmVersion() {
+  return execSync('npm -v').toString().trim().split('.')[0] || '0';
+}
 
 function cli(options) {
   try {
