@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const { program } = require('commander');
+const { cli, cliList } = require('../src/cli');
 
 program
   // 创建项目
@@ -11,6 +12,20 @@ program
   .action((appName, option) => {
     require('../src/create')(appName, option);
   });
+
+/**
+ * 兼容使用常见的 cli 命令
+ * vue： vite
+ * react： create-react-app
+ */
+cliList.map(({ name, description }) => {
+  program
+    .command(name)
+    .description(description)
+    .action(() => {
+      cli(program.args);
+    });
+});
 
 program
   // 创建组件
