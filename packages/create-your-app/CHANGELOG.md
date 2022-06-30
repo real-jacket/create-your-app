@@ -1,5 +1,12 @@
 # @rjkt/create-your-app
 
+## 0.1.0
+
+### Minor Changes
+
+- [#19](https://github.com/real-jacket/create-your-app/pull/19) [`46e72f4b`](https://github.com/real-jacket/create-your-app/commit/46e72f4bf8f4094059b209f0862cdcee111485a5) Thanks [@real-jacket](https://github.com/real-jacket)! - Feat:
+  add more way to create app quickly
+
 ## 0.0.4
 
 ### Patch Changes
