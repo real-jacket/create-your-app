@@ -2,6 +2,31 @@
 
 这是一个 cli 工具，旨在降低 web 开发的前置成本。
 
+## 快速开始
+
+```shell
+npx @rjkt/create-your-app create my-app
+cd my-app
+yarn dev
+```
+
+然后在浏览器里打开 [http://localhost:9000/](http://localhost:9000/)。
+
+## 使用方法
+
+## 定制化创建项目
+
+目前只支持内置的 react + webpack 自定义项目。
+
+```bash
+npx @rjkt/create-your-app create my-app
+```
+
+### 快速创建项目
+
+- react：基于 create-react-app 创建项目，`npx @rjkt/create-your-app react my-app`
+- vue：基于 vite 创建项目，`npx @rjkt/create-your-app vue my-app`
+
 ## 功能
 
 目前支持作者内置的 react + webpack 模板，后续功能持续开发中，具体开发计划可以参考项目的 [issue](https://github.com/real-jacket/create-your-app/issues)。
