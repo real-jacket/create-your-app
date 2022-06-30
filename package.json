@@ -11,7 +11,8 @@
     "ci:version": "changeset version",
     "changeset": "changeset",
     "commit": "git cz",
-    "ci:publish": "changeset publish"
+    "ci:publish": "changeset publish",
+    "clear": "rimraf 'packages/*/{lib,node_modules}' && rimraf node_modules"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.5",
@@ -29,6 +30,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.8",
     "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
     "typescript": "^4.6.3"
   },
   "config": {
