@@ -10,8 +10,8 @@ const cliList = [
     description: 'create your new vue app with vite',
     cliName:
       getNpmVersion() >= 7
-        ? 'npm create vite@latest my-vue-app -- --template vue'
-        : 'npm create vite@latest my-vue-app --template vue'
+        ? 'npm create vite@latest -- --template vue'
+        : 'npm create vite@latest --template vue'
   },
   {
     name: 'react',
