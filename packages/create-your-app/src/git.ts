@@ -1,4 +1,4 @@
-const chalk = require('chalk');
+import * as chalk from 'chalk';
 const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
@@ -144,9 +144,4 @@ function makeHookExecutable(hookPath) {
   }
 }
 
-module.exports = {
-  tryGitInit,
-  tryGitCommit,
-  createGitIgnore,
-  makeHookExecutable
-};
+export { tryGitInit, tryGitCommit, createGitIgnore, makeHookExecutable };

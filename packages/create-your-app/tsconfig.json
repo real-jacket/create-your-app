@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src", "../../@types"],
+  "exclude": ["node_modules", "**/*.d.ts"],
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
+    "typeRoots": ["node_modules/@types", "../../@types/*"]
+  }
+}

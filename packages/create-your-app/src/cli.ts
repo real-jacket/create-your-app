@@ -1,6 +1,5 @@
 const { execSync } = require('child_process');
-const chalk = require('chalk');
-
+import * as chalk from 'chalk';
 /**
  * 支持的 cli 列表
  */
@@ -28,7 +27,7 @@ function getNpmVersion() {
 function cli(options) {
   try {
     const [name, ...args] = options;
-    const cliName = cliList.find((item) => item.name === name).cliName;
+    const cliName = cliList.find((item) => item.name === name)?.cliName;
     const shell = `${cliName} ${args.join(' ')}`;
     console.log(shell);
     execSync(shell, { stdio: 'inherit' });

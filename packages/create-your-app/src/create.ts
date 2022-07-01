@@ -12,6 +12,7 @@ const {
   makeHookExecutable
 } = require('./git');
 const { createPackageJson, pkgAdd, pkgRemove } = require('./pkg');
+import { TemplatePkgJson } from './typing';
 
 /**
  * 项目配置
@@ -273,14 +274,15 @@ module.exports = async function (name, options) {
   const templateJsonPath = path.join(templatePath, 'template.json');
   console.log('templatePath: ', templatePath);
 
-  let templateJson = {};
+  //@ts-ignore
+  let templateJson: TemplatePkgJson = {};
 
   if (fs.existsSync(templateJsonPath)) {
     templateJson = require(templateJsonPath);
   }
 
   // 项目的 package.json
-  const appPackage = require(path.resolve((rootApp, 'package.json')));
+  const appPackage = require(path.resolve(rootApp, 'package.json'));
 
   // template package 默认配置，会用一个 package key 包一层
   const templatePackage = templateJson.package || {};

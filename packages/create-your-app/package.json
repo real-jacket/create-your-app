@@ -16,6 +16,10 @@
     "create-your-app": "./bin/cya.js",
     "cya": "./bin/cya.js"
   },
+  "scripts": {
+    "start": "tsc -p tsconfig.json --watch",
+    "build": "tsc -p tsconfig.json"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -46,5 +50,8 @@
     "ora": "^5.4.1",
     "replace-in-file": "^6.3.5",
     "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0"
   }
 }
