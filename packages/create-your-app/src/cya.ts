@@ -1,7 +1,8 @@
 #! /usr/bin/env node
 
 const { program } = require('commander');
-const { cli, cliList } = require('../src/cli');
+const { cli, cliList } = require('./cli');
+const pkg = require('../package.json');
 
 program
   // 创建项目
@@ -10,7 +11,7 @@ program
   .option('-f,--force', 'overwrite target directory if it exit')
   .option('-t,--template <path-to-template>', 'template', '')
   .action((appName, option) => {
-    require('../src/create')(appName, option);
+    require('./create')(appName, option);
   });
 
 /**
@@ -52,10 +53,7 @@ program
 
 program
   // 配置版本号信息
-  .version(
-    `cya current version : \nv${require('../package.json').version}`,
-    '-v,--version'
-  )
+  .version(`cya current version : \nv${pkg.version}`, '-v,--version')
   .usage('<command> [option]');
 
 // 解析用户执行命令传入参数

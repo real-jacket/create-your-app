@@ -1,7 +1,7 @@
 const spawn = require('cross-spawn');
 const { NpmRegistry, TaobaoNpmRegistry } = require('./constants');
 const { exec } = require('shelljs');
-const fs = require('fs-extra');
+import * as fs from 'fs-extra';
 const path = require('path');
 const chalk = require('chalk');
 const os = require('os');
@@ -82,8 +82,4 @@ function pkgRemove(deps, error) {
   }
 }
 
-module.exports = {
-  createPackageJson,
-  pkgAdd,
-  pkgRemove
-};
+export { createPackageJson, pkgAdd, pkgRemove };

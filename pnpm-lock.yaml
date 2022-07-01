@@ -42,6 +42,7 @@ importers:
 
   packages/create-your-app:
     specifiers:
+      '@types/node': ^18.0.0
       camelcase: ^6.2.0
       chalk: ^4.1.0
       commander: ^9.2.0
@@ -63,6 +64,8 @@ importers:
       ora: 5.4.1
       replace-in-file: 6.3.5
       shelljs: 0.8.5
+    devDependencies:
+      '@types/node': 18.0.0
 
   packages/react-webpack-template:
     specifiers: {}

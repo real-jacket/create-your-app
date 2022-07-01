@@ -4,6 +4,8 @@ node_modules
 dist
 .pnpm-store/*
 .pnpm-cache/*
+packages/*/lib
+packages/*/tsconfig.tsbuildinfo
 
 # example 
 example
