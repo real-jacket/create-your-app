@@ -1,10 +1,16 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src", "../../@types"],
-  "exclude": ["node_modules", "**/*.d.ts"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "lib/**/*"],
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "lib",
     "rootDir": "src",
-    "typeRoots": ["node_modules/@types", "../../@types/*"]
+    "typeRoots": ["node_modules/@types"],
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "tsBuildInfoFile": ".tsbuildinfo"
   }
 }

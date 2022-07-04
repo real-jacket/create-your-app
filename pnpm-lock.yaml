@@ -42,6 +42,7 @@ importers:
 
   packages/create-your-app:
     specifiers:
+      '@types/fs-extra': ^9.0.13
       '@types/node': ^18.0.0
       camelcase: ^6.2.0
       chalk: ^4.1.0
@@ -53,6 +54,7 @@ importers:
       ora: ^5.4.1
       replace-in-file: ^6.3.5
       shelljs: ^0.8.5
+      tslib: ^2.4.0
     dependencies:
       camelcase: 6.3.0
       chalk: 4.1.2
@@ -64,7 +66,9 @@ importers:
       ora: 5.4.1
       replace-in-file: 6.3.5
       shelljs: 0.8.5
+      tslib: 2.4.0
     devDependencies:
+      '@types/fs-extra': 9.0.13
       '@types/node': 18.0.0
 
   packages/react-webpack-template:
@@ -629,6 +633,12 @@ packages:
 
   /@tsconfig/node16/1.0.3:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
+    dev: true
+
+  /@types/fs-extra/9.0.13:
+    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
+    dependencies:
+      '@types/node': 18.0.0
     dev: true
 
   /@types/is-ci/3.0.0:

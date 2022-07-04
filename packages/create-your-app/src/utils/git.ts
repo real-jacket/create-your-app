@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+const chalk = require('chalk');
 const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
