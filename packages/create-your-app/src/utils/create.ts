@@ -12,7 +12,7 @@ const {
   makeHookExecutable
 } = require('./git');
 const { createPackageJson, pkgAdd, pkgRemove } = require('./pkg');
-import { TemplatePkgJson } from './typing';
+import { TemplatePkgJson } from '../typing';
 
 /**
  * 项目配置

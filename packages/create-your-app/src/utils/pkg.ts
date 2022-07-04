@@ -1,7 +1,7 @@
 const spawn = require('cross-spawn');
 const { NpmRegistry, TaobaoNpmRegistry } = require('./constants');
 const { exec } = require('shelljs');
-import * as fs from 'fs-extra';
+import fs from 'fs-extra';
 const path = require('path');
 const chalk = require('chalk');
 const os = require('os');

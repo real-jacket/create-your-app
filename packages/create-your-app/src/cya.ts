@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const { program } = require('commander');
-const { cli, cliList } = require('./cli');
+import { cli, cliList } from './cli';
 const pkg = require('../package.json');
 
 program
@@ -11,7 +11,7 @@ program
   .option('-f,--force', 'overwrite target directory if it exit')
   .option('-t,--template <path-to-template>', 'template', '')
   .action((appName, option) => {
-    require('./create')(appName, option);
+    require('./utils/create')(appName, option);
   });
 
 /**

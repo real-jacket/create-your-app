@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 /**
  * 支持的 cli 列表
  */
@@ -36,7 +36,4 @@ function cli(options) {
   }
 }
 
-module.exports = {
-  cliList,
-  cli
-};
+export { cliList, cli };
