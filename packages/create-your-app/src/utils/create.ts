@@ -1,18 +1,17 @@
-const inquire = require('inquirer');
-const fs = require('fs-extra');
-const path = require('path');
-const chalk = require('chalk');
-const os = require('os');
-const camelcase = require('camelcase');
-const replace = require('replace-in-file');
-const {
+import inquire from 'inquirer';
+import fs from 'fs-extra';
+import path from 'path';
+import chalk from 'chalk';
+import os from 'os';
+import camelcase from 'camelcase';
+import replace from 'replace-in-file';
+import {
   tryGitInit,
   tryGitCommit,
   createGitIgnore,
   makeHookExecutable
-} = require('./git');
-const { createPackageJson, pkgAdd, pkgRemove } = require('./pkg');
-import { TemplatePkgJson } from '../typing';
+} from './git';
+import { createPackageJson, pkgAdd, pkgRemove } from './pkg';
 
 /**
  * 项目配置
@@ -28,8 +27,8 @@ const config = {
 /**
  * 输入配置
  */
-// eslint-disable-next-line no-unused-vars
-async function input(options) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function input(options: { template: string; force: boolean }) {
   const { template } = options;
 
   const answers = await inquire.prompt([
@@ -90,7 +89,7 @@ async function input(options) {
       name: 'platform',
       choices: [
         {
-          name: 'creat-your-app',
+          name: 'create-your-app',
           value: 'cya'
         },
         {
@@ -98,7 +97,7 @@ async function input(options) {
           value: 'webpack'
         },
         {
-          name: 'creat-react-app',
+          name: 'create-react-app',
           value: 'cra'
         },
         {
@@ -155,7 +154,7 @@ async function input(options) {
  * @param {String} targetDir
  * @param {boolean} force
  */
-async function checkDir(targetDir, force) {
+async function checkDir(targetDir: string, force: boolean) {
   if (fs.existsSync(targetDir)) {
     if (force) {
       await fs.remove(targetDir);
@@ -192,7 +191,7 @@ async function checkDir(targetDir, force) {
  * @param {string} rootApp 项目路径
  * @param {string} appName 应用名称
  */
-function updateFiles(rootApp, appName) {
+function updateFiles(rootApp: string, appName: string) {
   const appPascalName = camelcase(appName, { pascalCase: true });
 
   try {
@@ -211,12 +210,15 @@ function updateFiles(rootApp, appName) {
   }
 }
 
-module.exports = async function (name, options) {
+export default async function (
+  name: string,
+  options: { force: boolean; template?: string }
+) {
   // 首先确定输入目录名
   const { appName } = await inquire.prompt({
     type: 'input',
     name: 'appName',
-    message: 'creat dir name',
+    message: 'create dir name',
     default: name || 'new-app'
   });
 
@@ -240,12 +242,13 @@ module.exports = async function (name, options) {
   let templateToInstall = template || '@rjkt/cya-react-webpack-template';
 
   // 本地路径：统一转化成绝对路径
-  if (template.match(/^((.{1,2})?\/|file:).*/)) {
+  if (template?.match(/^((.{1,2})?\/|file:).*/)) {
     const localTemplatePath = path.resolve(cwd, template);
     console.log('localTemplatePath: ', localTemplatePath);
 
     templateToInstall = `file:${localTemplatePath}`;
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { name } = require(path.join(localTemplatePath, 'package.json'));
     console.log('name: ', name);
     templateName = name;
@@ -274,14 +277,20 @@ module.exports = async function (name, options) {
   const templateJsonPath = path.join(templatePath, 'template.json');
   console.log('templatePath: ', templatePath);
 
-  //@ts-ignore
-  let templateJson: TemplatePkgJson = {};
+  let templateJson: TemplatePkgJson = {
+    package: {
+      scripts: {},
+      dependencies: {},
+      devDependencies: {}
+    }
+  };
 
   if (fs.existsSync(templateJsonPath)) {
     templateJson = require(templateJsonPath);
   }
 
   // 项目的 package.json
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const appPackage = require(path.resolve(rootApp, 'package.json'));
 
   // template package 默认配置，会用一个 package key 包一层
@@ -399,4 +408,4 @@ module.exports = async function (name, options) {
     console.log();
     console.log('\nCreated git commit.');
   }
-};
+}

@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 import chalk from 'chalk';
 /**
  * 支持的 cli 列表
@@ -21,7 +21,7 @@ const cliList = [
 
 // 获取 npm 版本号
 function getNpmVersion() {
-  return execSync('npm -v').toString().trim().split('.')[0] || '0';
+  return execSync('npm -v').toString().trim().split('.')[0] || 0;
 }
 
 function cli(options) {

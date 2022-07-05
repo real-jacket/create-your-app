@@ -5,7 +5,10 @@
     "commitlint",
     "kete",
     "maitainers",
+    "npmignore",
     "pnpm",
-    "rjkt"
+    "rjkt",
+    "Taobao",
+    "tsbuildinfo"
   ]
 }

@@ -1,8 +1,10 @@
+declare module '*.json';
+
 interface KV {
   [k: string]: string;
 }
 
-export interface TemplatePkgJson {
+interface TemplatePkgJson {
   package: {
     scripts: KV;
     dependencies: KV;

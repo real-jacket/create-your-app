@@ -1,8 +1,8 @@
-const chalk = require('chalk');
-const { execSync } = require('child_process');
-const fs = require('fs-extra');
-const path = require('path');
-const ora = require('ora');
+import chalk from 'chalk';
+import { execSync } from 'child_process';
+import fs from 'fs-extra';
+import path from 'path';
+import ora from 'ora';
 
 function isInGitRepository() {
   try {
@@ -42,7 +42,7 @@ function isInMercurialRepository() {
  * 初始化 git 仓库
  * @returns {boolean}
  */
-function tryGitInit() {
+function tryGitInit(): boolean {
   try {
     execSync('git --version', { stdio: 'ignore' });
     if (isInGitRepository() || isInMercurialRepository()) {
@@ -61,7 +61,7 @@ function tryGitInit() {
  * 初始化 commit
  * @returns {boolean}
  */
-function tryGitCommit() {
+function tryGitCommit(): boolean {
   try {
     console.log('\nGit commit:');
     console.log(' git add -A');
@@ -95,7 +95,7 @@ function tryGitCommit() {
  * 创建 .gitignore
  * @param {string} appPath
  */
-function createGitIgnore(appPath) {
+function createGitIgnore(appPath: string) {
   const gitignoreExists = fs.existsSync(path.join(appPath, '.gitignore'));
   if (gitignoreExists) {
     // Append if there's already a `.gitignore` file there
@@ -107,8 +107,7 @@ function createGitIgnore(appPath) {
     // See: https://github.com/npm/npm/issues/1862
     fs.moveSync(
       path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore'),
-      []
+      path.join(appPath, '.gitignore')
     );
   }
 }
@@ -116,7 +115,7 @@ function createGitIgnore(appPath) {
  * 给 husky 相关 hooks 添加可执行权限
  * @param {string} hookPath
  */
-function makeHookExecutable(hookPath) {
+function makeHookExecutable(hookPath: string) {
   const files = fs.readdirSync(hookPath);
   let error = false;
   files.forEach((file) => {

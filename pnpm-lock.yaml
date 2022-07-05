@@ -8,6 +8,7 @@ importers:
       '@changesets/cli': ^2.23.0
       '@commitlint/cli': ^16.2.3
       '@commitlint/config-conventional': ^16.2.1
+      '@types/node': ^18.0.0
       '@typescript-eslint/eslint-plugin': ^5.20.0
       '@typescript-eslint/parser': ^5.20.0
       commitizen: ^4.2.4
@@ -26,6 +27,7 @@ importers:
       '@changesets/cli': 2.23.0
       '@commitlint/cli': 16.3.0
       '@commitlint/config-conventional': 16.2.4
+      '@types/node': 18.0.0
       '@typescript-eslint/eslint-plugin': 5.30.0_5mtqsiui4sk53pmkx7i7ue45wm
       '@typescript-eslint/parser': 5.30.0_b5e7v2qnwxfo6hmiq56u52mz3e
       commitizen: 4.2.4
