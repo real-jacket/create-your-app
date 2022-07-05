@@ -1,8 +1,9 @@
 #! /usr/bin/env node
 
-const { program } = require('commander');
+import { program } from 'commander';
 import { cli, cliList } from './cli';
-const pkg = require('../package.json');
+import pkg from '../package.json';
+import create from './utils/create';
 
 program
   // 创建项目
@@ -10,8 +11,8 @@ program
   .description('create your new app')
   .option('-f,--force', 'overwrite target directory if it exit')
   .option('-t,--template <path-to-template>', 'template', '')
-  .action((appName, option) => {
-    require('./utils/create')(appName, option);
+  .action((appName: string, options) => {
+    create(appName, options);
   });
 
 /**

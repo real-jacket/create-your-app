@@ -3,7 +3,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "lib/**/*"],
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "lib",
     "rootDir": "src",
     "typeRoots": ["node_modules/@types"],
@@ -11,6 +11,8 @@
     "declaration": false,
     "declarationMap": false,
     "sourceMap": false,
-    "tsBuildInfoFile": ".tsbuildinfo"
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "resolveJsonModule": false,
+    "moduleResolution": "node"
   }
 }
