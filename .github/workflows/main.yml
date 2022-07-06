@@ -41,7 +41,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          rm pnpm-lock.yaml
           pnpm install
         
       - name: create and publish versions
