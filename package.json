@@ -11,7 +11,7 @@
     "ci:version": "changeset version",
     "changeset": "changeset",
     "commit": "git cz",
-    "ci:publish": "changeset publish",
+    "ci:publish": "pnpm -r build && changeset publish",
     "clear": "rimraf 'packages/*/{lib,node_modules}' && rimraf node_modules"
   },
   "devDependencies": {
