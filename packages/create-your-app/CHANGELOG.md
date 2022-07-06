@@ -1,5 +1,13 @@
 # @rjkt/create-your-app
 
+## 0.2.0
+
+### Minor Changes
+
+- [#22](https://github.com/real-jacket/create-your-app/pull/22) [`577a6c0f`](https://github.com/real-jacket/create-your-app/commit/577a6c0fd09ca06d1c0108c79b1a8eb2b570e397) Thanks [@real-jacket](https://github.com/real-jacket)! - Feature:
+
+  write in ts
+
 ## 0.1.0
 
 ### Minor Changes
