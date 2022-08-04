@@ -3,8 +3,6 @@ import fs from 'fs-extra';
 import path from 'path';
 import chalk from 'chalk';
 import os from 'os';
-import camelcase from 'camelcase';
-import replace from 'replace-in-file';
 import {
   tryGitInit,
   tryGitCommit,
@@ -12,6 +10,7 @@ import {
   makeHookExecutable
 } from './git';
 import { createPackageJson, pkgAdd, pkgRemove } from './pkg';
+import { checkDir, cwdPath, updateFiles } from './path';
 
 /**
  * 项目配置
@@ -149,67 +148,6 @@ async function input(options: { template: string; force: boolean }) {
   return answers;
 }
 
-/**
- * 判断目录是否存在，新建同名副本或者强制覆盖删除
- * @param {String} targetDir
- * @param {boolean} force
- */
-async function checkDir(targetDir: string, force: boolean) {
-  if (fs.existsSync(targetDir)) {
-    if (force) {
-      await fs.remove(targetDir);
-    } else {
-      const { action } = await inquire.prompt([
-        {
-          type: 'confirm',
-          name: 'action',
-          message: '当前目录已经存在，是否需要覆盖创建,否则新建同名副本目录',
-          default: true
-        }
-      ]);
-
-      if (action) {
-        await fs.remove(targetDir);
-      } else {
-        let i = 1;
-        let latestDir = targetDir + '1';
-        // 存在则目录名递增
-        while (fs.existsSync(latestDir)) {
-          latestDir = targetDir + `${++i}`;
-        }
-        targetDir = latestDir;
-      }
-    }
-  }
-
-  fs.ensureDir(targetDir);
-  return targetDir;
-}
-
-/**
- * 替换模板里内置的应用名称
- * @param {string} rootApp 项目路径
- * @param {string} appName 应用名称
- */
-function updateFiles(rootApp: string, appName: string) {
-  const appPascalName = camelcase(appName, { pascalCase: true });
-
-  try {
-    replace.sync({
-      files: [
-        path.join(rootApp, 'src', '**/*'),
-        path.join(rootApp, 'public', '/*'),
-        path.join(rootApp, 'README.md')
-      ],
-      from: [/Template/g, /<%= appName %>/g],
-      to: [appPascalName, appName],
-      ignore: ['**/mode_modules/**']
-    });
-  } catch (error) {
-    console.log(chalk.red('更新 Template 内容出错了'));
-  }
-}
-
 export default async function (
   name: string,
   options: { force: boolean; template?: string }
@@ -223,7 +161,7 @@ export default async function (
   });
 
   // 当前命令行选择的目录
-  const cwd = process.cwd();
+  const cwd = cwdPath();
 
   // 需要创建的目录地址
   let rootApp = path.join(cwd, appName);
