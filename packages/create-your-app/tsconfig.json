@@ -1,11 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "lib/**/*"],
+  "include": ["src/**/*", "component"],
+  "exclude": ["node_modules", "lib", "component"],
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "lib",
     "rootDir": "src",
+    "types": ["node"],
     "typeRoots": ["node_modules/@types"],
     "composite": false,
     "declaration": false,

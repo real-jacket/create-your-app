@@ -4,6 +4,7 @@ import { program } from 'commander';
 import { cli, cliList } from './cli';
 import pkg from '../package.json';
 import create from './utils/create';
+import component from './utils/component';
 
 program
   // 创建项目
@@ -31,13 +32,16 @@ cliList.map(({ name, description }) => {
 
 program
   // 创建组件
-  .command('component <component-type> [component-name]')
+  .command('component [component-name]')
   .description('create your new component')
-  .option('-f,--force', 'overwrite target directory if it exit')
-  .option('-d,--dir', 'the dir that created component should locate in ')
-  .action((componentType, componentName, option) => {
-    console.log('type, name, option: ', componentType, componentName, option);
-    // require('../lib/create')(name, option);
+  .option(
+    '-t,--template <component-type-template>',
+    'the template dir or type of component',
+    'react'
+  )
+  .option('-d,--dir <dir-of-component>', 'the dir of component should be in')
+  .action((componentName, option) => {
+    component(componentName, option);
   });
 
 program

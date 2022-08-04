@@ -36,6 +36,7 @@
     "node": ">=14"
   },
   "files": [
+    "component",
     "lib"
   ],
   "dependencies": {

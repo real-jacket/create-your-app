@@ -17,7 +17,6 @@
     "esModuleInterop": true,
     "useUnknownInCatchVariables": false,
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "forceConsistentCasingInFileNames": true
   }
 }
