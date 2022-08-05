@@ -31,6 +31,10 @@ npx @rjkt/create-your-app create my-app
 
 目前支持作者内置的 react + webpack 模板，后续功能持续开发中，具体开发计划可以参考项目的 [issue](https://github.com/real-jacket/create-your-app/issues)。
 
+### 创建组件
+
+支持使用 `npx @rjkt/create-your-app component my-component` 创建组件。目前内置仅支持 react、ts-react 组件。其余框架需自定义,唯一的占位符即创建组件的名字 `component-name`
+
 ## 本地开发指南
 
 1. 安装依赖 `pnpm i`，如果没有安装 `pnpm` ，请参考 [pnpm官网](https://pnpm.io/installation) 进行安装。
