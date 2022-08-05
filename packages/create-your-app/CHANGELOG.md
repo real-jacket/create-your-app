@@ -1,5 +1,11 @@
 # @rjkt/create-your-app
 
+## 1.0.0
+
+### Major Changes
+
+- [#24](https://github.com/real-jacket/create-your-app/pull/24) [`adb101a1`](https://github.com/real-jacket/create-your-app/commit/adb101a117de7980dcefcbe2d4f4b75a153ffc26) Thanks [@real-jacket](https://github.com/real-jacket)! - feat: add component function
+
 ## 0.2.0
 
 ### Minor Changes
