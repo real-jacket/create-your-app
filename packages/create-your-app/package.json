@@ -46,14 +46,21 @@
     "cross-spawn": "^7.0.3",
     "ejs": "^3.1.6",
     "fs-extra": "^10.1.0",
+    "ignore": "^5.2.4",
     "inquirer": "^8.2.2",
+    "micromatch": "^4.0.5",
+    "node-fetch": "^2.6.7",
+    "npm-registry-fetch": "^14.0.5",
     "ora": "^5.4.1",
     "replace-in-file": "^6.3.5",
     "shelljs": "^0.8.5",
+    "tar": "^6.1.15",
     "tslib": "^2.4.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^18.0.0"
+    "@types/micromatch": "^4.0.2",
+    "@types/node": "^18.0.0",
+    "@types/npm-registry-fetch": "^8.0.4"
   }
 }

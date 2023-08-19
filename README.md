@@ -18,8 +18,15 @@ yarn dev
 
 目前只支持内置的 react + webpack 自定义项目。
 
+使用 `npm`
+
 ```bash
 npx @rjkt/create-your-app create my-app
+```
+使用 `pnpm`
+
+```bash
+pnpx @rjkt/create-your-app create my-app
 ```
 
 ### 快速创建项目

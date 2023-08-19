@@ -9,8 +9,9 @@ import {
   createGitIgnore,
   makeHookExecutable
 } from './git';
-import { createPackageJson, pkgAdd, pkgRemove } from './pkg';
+import { createPackageJson, pkgDownload } from './pkg';
 import { checkDir, cwdPath, updateFiles } from './path';
+import ora from 'ora';
 
 /**
  * 项目配置
@@ -169,10 +170,9 @@ export default async function (
   // 判断目录是否存在，并返回最终的目录路径
   rootApp = await checkDir(rootApp, options.force);
 
-  console.log('rootApp: ', rootApp);
-
   // 确定项目配置
   // const { platform } = await input(options);
+
   // 模版名称
   const { template } = options;
 
@@ -184,14 +184,16 @@ export default async function (
     const localTemplatePath = path.resolve(cwd, template);
     console.log('localTemplatePath: ', localTemplatePath);
 
-    templateToInstall = `file:${localTemplatePath}`;
+    // templateToInstall = `file:${localTemplatePath}`;
+    templateToInstall = localTemplatePath;
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { name } = require(path.join(localTemplatePath, 'package.json'));
-    console.log('name: ', name);
+
     templateName = name;
+  } else {
+    console.log('templateName: ', templateName);
   }
-  console.log('templateName: ', templateName);
 
   console.log(`\nCreating a new app in ${chalk.green(rootApp)}\n`);
 
@@ -202,18 +204,39 @@ export default async function (
   process.chdir(rootApp);
 
   // install template
-  pkgAdd([templateToInstall], () => {
-    console.log(`Error: install template ${chalk.red(templateName)} fail`);
-  });
+  // pkgAdd([templateToInstall], () => {
+  //   console.log(`Error: install template ${chalk.red(templateName)} fail`);
+  // });
 
-  const templatePath = path.dirname(
-    require.resolve(`${templateName}/package.json`, {
-      paths: [rootApp]
-    })
-  );
+  // download template
+  const spinner = ora({
+    text: `Downloading ${chalk.cyan(templateName)}...`,
+    color: 'yellow'
+  }).start();
+
+  let templatePath: fs.PathLike;
+  try {
+    if (template?.match(/^((.{1,2})?\/|file:).*/)) {
+      templatePath = path.join(process.cwd(), path.basename(templateToInstall));
+      fs.copySync(templateToInstall, templatePath, { recursive: true });
+    } else {
+      templatePath = await pkgDownload(templateToInstall);
+    }
+    spinner.succeed(`Download ${chalk.cyan(templateName)} success`);
+  } catch (error) {
+    spinner.fail(`Download ${chalk.cyan(templateName)} fail`);
+    console.log(error);
+
+    process.exit(1);
+  }
+
+  // const templatePath = path.dirname(
+  //   require.resolve(`${templateName}/package.json`, {
+  //     paths: [rootApp]
+  //   })
+  // );
 
   const templateJsonPath = path.join(templatePath, 'template.json');
-  console.log('templatePath: ', templatePath);
 
   let templateJson: TemplatePkgJson = {
     package: {
@@ -316,27 +339,30 @@ export default async function (
   }
 
   // Install additional template dependencies, if present
-  const dependenciesToInstall = Object.entries({
-    ...templatePackage.dependencies,
-    ...templatePackage.devDependencies
-  });
+  // const dependenciesToInstall = Object.entries({
+  //   ...templatePackage.dependencies,
+  //   ...templatePackage.devDependencies
+  // });
 
-  if (dependenciesToInstall.length) {
-    const deps = dependenciesToInstall.map(
-      ([dependency, version]) => `${dependency}@${version}`
-    );
+  // if (dependenciesToInstall.length) {
+  //   const deps = dependenciesToInstall.map(
+  //     ([dependency, version]) => `${dependency}@${version}`
+  //   );
 
-    pkgAdd(deps, () => {
-      console.log(chalk.red('Install template dependencies failed'));
-      process.exit(1);
-    });
-  }
+  //   pkgAdd(deps, () => {
+  //     console.log(chalk.red('Install template dependencies failed'));
+  //     process.exit(1);
+  //   });
+  // }
 
   // remove template pkg
-  pkgRemove([templateName], () => {
-    console.log(chalk.red('Remove template pkg failed'));
-    process.exit(1);
-  });
+  // pkgRemove([templateName], () => {
+  //   console.log(chalk.red('Remove template pkg failed'));
+  //   process.exit(1);
+  // });
+
+  // remove template path
+  fs.rmSync(templatePath, { recursive: true });
 
   // Make hook executable
   makeHookExecutable(path.join(process.cwd(), '.husky'));
@@ -346,4 +372,12 @@ export default async function (
     console.log();
     console.log('\nCreated git commit.');
   }
+
+  console.log();
+  console.log(`Success! Created ${appName} at ${rootApp}`);
+  console.log();
+  console.log('We suggest that you begin by typing:');
+  console.log();
+  console.log(`cd ${appName}`);
+  console.log('npm/yarn/pnpm install');
 }
