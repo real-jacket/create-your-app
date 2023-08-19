@@ -5,6 +5,9 @@ import { cli, cliList } from './cli';
 import pkg from '../package.json';
 import create from './utils/create';
 import component from './utils/component';
+import { pkgDownload, pkgGet } from './utils/pkg';
+import path from 'path';
+import { createOrUpdateTemplate } from './utils/template';
 
 program
   // 创建项目
@@ -14,6 +17,42 @@ program
   .option('-t,--template <path-to-template>', 'template', '')
   .action((appName: string, options) => {
     create(appName, options);
+  });
+
+program
+  // 列出内置模板
+  .command('list')
+  .description('list the built-in template')
+  .action(async () => {
+    const list = await pkgGet('rjkt');
+    console.log('The template list: ');
+    console.log();
+    list.forEach(({ name, description }) => {
+      console.log(`${name}`);
+      console.log(`|—— description:${description}`);
+    });
+  });
+
+program
+  // 转化模板
+  .command('transform <source-template-path> <target-template-path>')
+  .description('transform the source path to template in target template path')
+  .option('-n,--name <package-name>', 'the template package name')
+  .action(async (sourceTemplatePath, targetTemplatePath, options) => {
+    const { name } = options;
+    const abSourceTemplatePath = path.resolve(
+      process.cwd(),
+      sourceTemplatePath
+    );
+    createOrUpdateTemplate(abSourceTemplatePath, targetTemplatePath, name);
+  });
+
+program
+  // 列出内置模板
+  .command('test')
+  .description('test local api')
+  .action(async () => {
+    pkgDownload('@rjkt/cya-react-webpack-template');
   });
 
 /**

@@ -8,7 +8,7 @@ const cliList = [
     name: 'vue',
     description: 'create your new vue app with vite',
     cliName:
-      getNpmVersion() >= 7
+      +getNpmVersion() >= 7
         ? 'npm create vite@latest -- --template vue'
         : 'npm create vite@latest --template vue'
   },
@@ -24,7 +24,7 @@ function getNpmVersion() {
   return execSync('npm -v').toString().trim().split('.')[0] || 0;
 }
 
-function cli(options) {
+function cli(options: unknown[]) {
   try {
     const [name, ...args] = options;
     const cliName = cliList.find((item) => item.name === name)?.cliName;

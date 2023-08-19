@@ -88,3 +88,34 @@ export function updateFiles(rootApp: string, appName: string) {
     console.log(chalk.red('更新 Template 内容出错了'));
   }
 }
+
+/**
+ *
+ * @param filePath 文件路径
+ * @param onFile 处理文件的函数
+ * @param isContinue 是否继续遍历
+ */
+export function traverseFile(
+  filePath: string,
+  onFile: (abPath: string) => void,
+  isContinue: (abPath: string) => boolean = () => true
+) {
+  // 遍历目录
+  for (const abPath of fs.readdirSync(filePath)) {
+    const path = `${filePath}/${abPath}`;
+
+    // 判断是否继续遍历
+    if (!isContinue(path)) {
+      continue;
+    }
+
+    // 判断是否为目录
+    if (fs.statSync(path).isDirectory()) {
+      // 如果是目录，则递归遍历
+      traverseFile(path, onFile, isContinue);
+    } else {
+      // 如果是文件，则处理文件
+      onFile(path);
+    }
+  }
+}

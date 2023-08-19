@@ -68,7 +68,7 @@ function tryGitCommit(): boolean {
     execSync('git add -A', { stdio: 'inherit' });
     console.log(' git commit -m "feat(chore): init project"');
     execSync('git commit -m "feat(chore): init project"', {
-      stdio: 'inherit'
+      stdio: 'ignore'
     });
     return true;
   } catch (e) {
@@ -116,6 +116,7 @@ function createGitIgnore(appPath: string) {
  * @param {string} hookPath
  */
 function makeHookExecutable(hookPath: string) {
+  if (!fs.existsSync(hookPath)) return;
   const files = fs.readdirSync(hookPath);
   let error = false;
   files.forEach((file) => {

@@ -10,5 +10,6 @@
     "rjkt",
     "Taobao",
     "tsbuildinfo"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
