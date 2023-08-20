@@ -1,2 +1,4 @@
 /packages/*/lib
+/packages/*/template
+/packages/*/test
 /packages/create-your-app/component
