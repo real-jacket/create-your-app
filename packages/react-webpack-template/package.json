@@ -11,7 +11,7 @@
     "webpack",
     "create-your-app"
   ],
-  "description": "The base template for react in Create your app",
+  "description": "The base template for react with webpack in Create your app",
   "publishConfig": {
     "access": "public"
   },

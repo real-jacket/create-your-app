@@ -2,9 +2,10 @@ const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 // 分析 bundle 打包速度的
 // const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -14,7 +15,7 @@ const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const webpackConfig = merge(common, {
-  // mode: 'production',
+  mode: 'production',
   // devtool: 'source-map',
   optimization: {
     // minimize: true,
@@ -85,14 +86,19 @@ const webpackConfig = merge(common, {
   },
   plugins: [
     // new BundleAnalyzerPlugin(),
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:8].css'
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     // dll 打包
     new DllReferencePlugin({
-      manifest: require('../dist/react.manifest.json')
+      manifest: require('../dist/react-manifest.json')
+    }),
+    // 添加 dll 链接
+    new AddAssetHtmlPlugin({
+      publicPath: '',
+      filepath: path.resolve(__dirname, '../dist/react.dll.js')
     })
   ],
   output: {
