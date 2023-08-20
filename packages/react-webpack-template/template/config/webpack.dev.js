@@ -33,9 +33,13 @@ module.exports = merge(common, {
     ]
   },
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist'),
-    progress: true,
-    // open: true,
+    client: {
+      progress: true
+    },
+    open: true,
+    static: {
+      directory: path.join(__dirname, './public')
+    },
     port: 9000,
     hot: true
   }

@@ -1,19 +1,22 @@
 const path = require('path');
 const DllPlugin = require('webpack/lib/DllPlugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
     react: ['react', 'react-dom']
   },
   output: {
-    filename: '[name].dll.js',
     path: path.join(__dirname, '../dist'),
-    library: '_dll_[name]'
+    filename: '[name].dll.js',
+    library: '[name]_[hash]'
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new DllPlugin({
-      name: '_dll_[name]',
-      path: path.join(__dirname, '../dist', '[name].manifest.json')
+      // 确保更 output.library 一样
+      name: '[name]_[hash]',
+      path: path.join(__dirname, '../dist', '[name]-manifest.json')
     })
   ]
 };
