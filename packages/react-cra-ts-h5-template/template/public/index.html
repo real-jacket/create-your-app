@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache,no-store,must-revalidate"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta
+      name="format-detection"
+      content="telephone=no,email=no,date=no,address=no"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <style>
+      #loading-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        /* 禁止底部滑动 */
+        -webkit-overflow-scrolling: touch;
+        z-index: 99999;
+      }
+
+      #loading-wrapper > .loading-container {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        width: 2em;
+      }
+
+      .loading-container > span {
+        width: 0.3em;
+        height: 1em;
+        background-color: #3cefff;
+      }
+
+      .loading-container > span:nth-of-type(1) {
+        animation: grow 1s -0.45s ease-in-out infinite;
+      }
+
+      .loading-container > span:nth-of-type(2) {
+        animation: grow 1s -0.3s ease-in-out infinite;
+      }
+
+      .loading-container > span:nth-of-type(3) {
+        animation: grow 1s -0.15s ease-in-out infinite;
+      }
+
+      .loading-container > span:nth-of-type(4) {
+        animation: grow 1s ease-in-out infinite;
+      }
+
+      @keyframes grow {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+
+        50% {
+          transform: scaleY(2);
+        }
+      }
+    </style>
+    <title>demo-1234</title>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- 加载动画 -->
+    <div id="loading-wrapper">
+      <div class="loading-container">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <script>
+      setTimeout(function () {
+        var loading = document.getElementById('loading-wrapper');
+        var body = document.querySelector('body');
+        if (body && loading) {
+          body.removeChild(loading);
+        }
+      }, 5000);
+    </script>
+    <div id="root"></div>
+  </body>
+</html>

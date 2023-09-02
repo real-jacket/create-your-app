@@ -1,0 +1,34 @@
+{
+  "name": "@rjkt/cya-react-cra-ts-h5-template",
+  "version": "1.0.0",
+  "keywords": [
+    "react",
+    "create-react-app",
+    "template",
+    "craco",
+    "typescript"
+  ],
+  "description": "The custom typeScript-h5 template for Create React App by craco.",
+  "author": "real-jacket <1762982273@qq.com>",
+  "maintainers": [
+    "real-jacket"
+  ],
+  "main": "template.json",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/real-jacket/create-your-app.git",
+    "directory": "packages/react-cra-ts-h5-template"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/real-jacket/create-your-app/issues"
+  },
+  "files": [
+    "template",
+    "template.json"
+  ],
+  "gitHead": ""
+}

@@ -1,0 +1,48 @@
+diff --git a/dist/bin/craco.js b/dist/bin/craco.js
+old mode 100755
+new mode 100644
+diff --git a/dist/lib/features/webpack/style/postcss.js b/dist/lib/features/webpack/style/postcss.js
+index 42789f98b29cbe81bc38e09ffd8155143f8991e8..531b5f6703b3bf594ffb116994344389d6a18fe8 100644
+--- a/dist/lib/features/webpack/style/postcss.js
++++ b/dist/lib/features/webpack/style/postcss.js
+@@ -37,10 +37,10 @@ function extendsPostcss(match, _a) {
+     var postcssOptions = _a.postcss;
+     var _c = postcssOptions !== null && postcssOptions !== void 0 ? postcssOptions : {}, plugins = _c.plugins, env = _c.env;
+     if ((0, utils_1.isArray)(plugins) || env) {
+-        var postcssPlugins_1;
++        var postcssPlugins = void 0;
+         if (env) {
+             var mergedPreset = (0, utils_1.deepMergeWithArray)({}, CRA_PRESET_ENV, env);
+-            postcssPlugins_1 = CRA_PLUGINS(mergedPreset);
++            postcssPlugins = CRA_PLUGINS(mergedPreset);
+             (0, logger_1.log)('Merged PostCSS env preset.');
+         }
+         else {
+@@ -54,21 +54,21 @@ function extendsPostcss(match, _a) {
+                     craPlugins = options === null || options === void 0 ? void 0 : options.plugins;
+                 }
+             }
+-            postcssPlugins_1 = craPlugins || [];
++            postcssPlugins = craPlugins || [];
+         }
+         if (plugins) {
+-            postcssPlugins_1 = (0, utils_1.isFunction)(plugins)
+-                ? plugins(postcssPlugins_1)
+-                : postcssPlugins_1.concat(plugins);
++            postcssPlugins = (0, utils_1.isFunction)(plugins)
++                ? plugins(postcssPlugins)
++                : postcssPlugins.concat(plugins);
+             (0, logger_1.log)('Added PostCSS plugins.');
+         }
+         if (match.loader.options && !(0, lodash_1.isString)(match.loader.options)) {
+             if (match.loader.options.postcssOptions) {
+-                match.loader.options.postcssOptions.plugins = function () { return postcssPlugins_1; };
++                match.loader.options.postcssOptions.plugins = postcssPlugins;
+             }
+             else {
+                 match.loader.options.postcssOptions = {
+-                    plugins: function () { return postcssPlugins_1; },
++                    plugins: postcssPlugins,
+                 };
+             }
+         }
