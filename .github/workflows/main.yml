@@ -27,7 +27,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 7
+          version: 8
           run_install: false
 
       - name: setup pnpm config
@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
 
       - name: create and publish versions
         uses: changesets/action@master
