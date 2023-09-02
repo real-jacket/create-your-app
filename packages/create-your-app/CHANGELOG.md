@@ -1,5 +1,17 @@
 # @rjkt/create-your-app
 
+## 1.1.0
+
+### Minor Changes
+
+- [#26](https://github.com/real-jacket/create-your-app/pull/26) [`2d4fba35`](https://github.com/real-jacket/create-your-app/commit/2d4fba3503797ccc7710a4bdbd8ec7d81da8b6e4) Thanks [@real-jacket](https://github.com/real-jacket)! - - add transform commond
+  - add new method about git
+
+* [#26](https://github.com/real-jacket/create-your-app/pull/26) [`0c2a0176`](https://github.com/real-jacket/create-your-app/commit/0c2a0176211192b8850c9f5aef02c68400d2d1be) Thanks [@real-jacket](https://github.com/real-jacket)! - change the method of downloaing template
+  add template transform/update cli
+
+- [#26](https://github.com/real-jacket/create-your-app/pull/26) [`f23c5c09`](https://github.com/real-jacket/create-your-app/commit/f23c5c09cc6fc7a9790ab4733ac3d846349f3629) Thanks [@real-jacket](https://github.com/real-jacket)! - fix lint
+
 ## 1.0.0
 
 ### Major Changes
