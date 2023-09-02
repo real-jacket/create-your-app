@@ -23,6 +23,7 @@ yarn dev
 ```bash
 npx @rjkt/create-your-app create my-app
 ```
+
 使用 `pnpm`
 
 ```bash
@@ -42,6 +43,11 @@ pnpx @rjkt/create-your-app create my-app
 
 支持使用 `npx @rjkt/create-your-app component my-component` 创建组件。目前内置仅支持 react、ts-react 组件。其余框架需自定义,唯一的占位符即创建组件的名字 `component-name`
 
+## 内置模板
+
+- [@rjkt/cya-react-webpack-template](/packages/react-webpack-template)：基于 webpack + js 的项目
+- [@rjkt/cya-react-cra-ts-h5-template](/packages/react-cra-ts-h5-template)：基于 create-react-app + craco + typescript + h5 的项目
+
 ## 本地开发指南
 
 1. 安装依赖 `pnpm i`，如果没有安装 `pnpm` ，请参考 [pnpm官网](https://pnpm.io/installation) 进行安装。
@@ -49,3 +55,9 @@ pnpx @rjkt/create-your-app create my-app
 3. 获取内置模板`react-template` 的本地路径，使用命令 `cya create -t <local-template-path> <project-name>`进行项目的创建测试。
 
 注意：在 Linux 与 Macos 系统下还需要修改执行命令文件的权限为 755,`chmod 755 cya.js`
+
+### 模板开发
+
+1. 基于现有项目创建模板项目，使用命令 `cya transform <source-template-path> <target-template-path>` 进行项目的新建。
+
+2. 更新现有模板,使用命令 `cya create -t <local-template-path> <project-name>` 进行项目的创建，然后在这个项目的基础上进行改动，改动完再执行第一步进行更新。
