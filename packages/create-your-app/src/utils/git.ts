@@ -144,4 +144,60 @@ function makeHookExecutable(hookPath: string) {
   }
 }
 
-export { tryGitInit, tryGitCommit, createGitIgnore, makeHookExecutable };
+function getCurDirectory(target: string): string {
+  let relativePath: string = '';
+
+  const currentDir = process.cwd();
+  process.chdir(target);
+
+  try {
+    // 执行Git命令以获取Git仓库的根目录
+    const repoDir = execSync('git rev-parse --show-toplevel', {
+      encoding: 'utf-8'
+    }).trim();
+
+    // 计算当前目录相对于Git仓库根目录的子路径
+    relativePath = repoDir === target ? '.' : path.relative(repoDir, target);
+  } catch (error) {
+    console.error('获取 git 子目录失败：', error.message);
+  }
+
+  // 切换回当前目录
+  process.chdir(currentDir);
+
+  return relativePath;
+}
+
+function getGitRemoteUrl(target: string): string {
+  const currentDir = process.cwd();
+
+  let remoteURL: string = '';
+  // 切换到指定目录
+  process.chdir(target);
+
+  try {
+    // 执行Git命令以获取远程仓库的URL
+    remoteURL = execSync('git config --get remote.origin.url', {
+      encoding: 'utf-8'
+    }).trim();
+  } catch (error) {
+    console.error('获取 git 远程仓库地址失败：', error.message);
+  }
+
+  // 转换成 http 地址
+  remoteURL = remoteURL.replace(/git@github.com:/, 'https://github.com/');
+
+  // 切换回当前目录
+  process.chdir(currentDir);
+
+  return remoteURL;
+}
+
+export {
+  tryGitInit,
+  tryGitCommit,
+  createGitIgnore,
+  makeHookExecutable,
+  getCurDirectory,
+  getGitRemoteUrl
+};

@@ -5,6 +5,7 @@ import { traverseFile } from './path';
 import { createPackageJson } from './pkg';
 import ora from 'ora';
 import chalk from 'chalk';
+import { getCurDirectory, getGitRemoteUrl } from './git';
 
 export async function createOrUpdateTemplate(
   sourceTemplatePath: string,
@@ -93,7 +94,12 @@ export async function createOrUpdateTemplate(
 
   if (!fs.existsSync(packagePAth)) {
     createPackageJson(targetTemplatePath, templateName, {
-      files: ['template', 'template.json']
+      files: ['template', 'template.json'],
+      repository: {
+        type: 'git',
+        url: getGitRemoteUrl(targetTemplatePath),
+        directory: getCurDirectory(targetTemplatePath)
+      }
     });
   }
 
@@ -103,13 +109,39 @@ export async function createOrUpdateTemplate(
   );
 
   const templateJson = {
-    package: {
-      scripts: pkgJson.scripts || {},
-      dependencies: pkgJson.dependencies || {},
-      devDependencies: pkgJson.devDependencies || {},
-      config: pkgJson.config || {}
-    }
+    package: {}
   };
+
+  const templatePackageBlackList = [
+    'name',
+    'version',
+    'maitainers',
+    'description',
+    'keywords',
+    'bugs',
+    'license',
+    'author',
+    'contributors',
+    'browser',
+    'bin',
+    'man',
+    'directories',
+    'repository',
+    'bundledDependencies',
+    'optionalDependencies',
+    'engineStrict',
+    'os',
+    'cpu',
+    'preferGlobal',
+    'private',
+    'publishConfig'
+  ];
+
+  Object.keys(pkgJson).forEach((key) => {
+    if (templatePackageBlackList.indexOf(key) === -1) {
+      templateJson.package[key] = pkgJson[key];
+    }
+  });
 
   fs.writeFileSync(
     path.join(targetTemplatePath, 'template.json'),
