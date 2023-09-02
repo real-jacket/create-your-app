@@ -1,6 +1,4 @@
-<%= appName %>
-
-# 开始
+# <%= appName %>
 
 ## 安装依赖
 
@@ -10,10 +8,9 @@
 
 以下命令以 `npm` 为例
 
-
 ### `npm start`
 
-本地启动应用，在浏览器打开 [http://localhost:9000](http://localhost:9000) 
+本地启动应用，在浏览器打开 [http://localhost:9000](http://localhost:9000)
 
 ### `npm build`
 
@@ -24,7 +21,6 @@
 如果是使用 `pnpm`, 则 `prebuild` 命令不会执行，需要手动执行，这是由于 `pnpm` 特性决定的
 :::
 
-
 ### `npm commit`
 
 提交代码，使用 `commitlint` 校验提交信息，并 lint 提交的代码。
@@ -32,6 +28,7 @@
 ## 项目介绍
 
 ### 目录结构
+
 ```
 .
 ├── README.md                 # 项目介绍
