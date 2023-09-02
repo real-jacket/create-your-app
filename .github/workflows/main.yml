@@ -3,7 +3,7 @@ on:
   pull_request_review:
     branches:
       - main
-      
+
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 env:
@@ -21,13 +21,13 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          
+          node-version: 18
+
       - uses: pnpm/action-setup@v2.2.2
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 7
+          version: 8
           run_install: false
 
       - name: setup pnpm config
@@ -35,8 +35,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
-        
+          pnpm install --no-frozen-lockfile
+
       - name: create and publish versions
         uses: changesets/action@master
         with:
