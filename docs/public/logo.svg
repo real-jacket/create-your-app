@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1E1E" />
+      <stop offset="100%" stop-color="#2A2A2A" />
+    </linearGradient>
+    <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#41B883" />
+      <stop offset="100%" stop-color="#3178C6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="128" height="128" rx="16" fill="url(#bg-gradient)" />
+  
+  <!-- 图标元素 -->
+  <g transform="translate(24, 24)">
+    <!-- 代码括号 -->
+    <path d="M0,40 L16,24 L0,8 M80,40 L64,24 L80,8" stroke="url(#accent-gradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    
+    <!-- 中间的 Y 形状 -->
+    <path d="M40,8 L40,24 L28,40 M40,24 L52,40" stroke="url(#accent-gradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    
+    <!-- 底部文字 -->
+    <text x="40" y="78" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#FFFFFF">CYA</text>
+  </g>
+</svg> 
