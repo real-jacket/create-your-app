@@ -1,40 +1,60 @@
 # Introduction
 
-**Create Your App** is a command-line tool designed to help you quickly create various types of applications and components. It aims to reduce the setup cost of frontend development by providing a set of templates and tools.
+## What is Create Your App?
 
-## Features
+Create Your App is a CLI tool designed to simplify the initialization process of frontend development. It provides various templates and features to help developers quickly set up projects, create components, and manage monorepos.
 
-- **Multiple Templates**: Support for various project templates including React, Vue, and more
-- **Component Generation**: Quickly generate components with different structures
-- **Monorepo Support**: Complete workflow for managing monorepo projects
-- **Customizable**: Flexible configuration options to meet different needs
-- **High Performance**: Based on modern build tools for fast development experience
-- **Template Conversion**: Convert existing projects into templates for team reuse
+## Core Features
 
-## Why Create Your App?
+### Project Creation
 
-When starting a new project, developers often face the challenge of setting up the project structure, configuring build tools, and establishing code standards. Create Your App solves these problems by providing:
+Supports multiple project templates, including:
 
-1. **Ready-to-use Templates**: Pre-configured templates with best practices
-2. **Consistent Structure**: Standardized project structure across your team
-3. **Time Saving**: Eliminate repetitive setup tasks
-4. **Flexibility**: Customize templates to fit your specific needs
-5. **Scalability**: Support for both small projects and large monorepo setups
+- React + Webpack
+- React + Vite
+- React + CRA + TypeScript (H5)
+- Library template
+- Monorepo library template
 
-## Getting Started
+### Component Generation
 
-To get started with Create Your App, check out the [Getting Started](./getting-started.md) guide.
+Quickly create components, supporting multiple component types:
 
-## Available Templates
+- React components
+- TypeScript React components
+- Custom component templates
 
-Create Your App provides several templates to help you get started quickly:
+### Monorepo Support
 
-- [React Webpack](../templates/react-webpack.md): React project template based on Webpack 5
-- [React CRA](../templates/react-cra.md): H5 project template based on Create React App
-- [React Vite](../templates/react-vite.md): React H5 project template based on Vite
-- [Library Template](../templates/lib.md): TypeScript library template based on Rollup
-- [Monorepo Library Template](../templates/lib-monorepo.md): Monorepo library template
+Complete monorepo workflow support:
+
+- Creating sub-packages
+- Managing dependencies
+- Build optimization
+
+## Design Philosophy
+
+The design philosophy of Create Your App is to "reduce upfront costs." In frontend development, project initialization, tool configuration, and other upfront work often take up a lot of time, and these tasks are repetitive. Create Your App automates these processes, allowing developers to get into actual business development faster.
+
+## Documentation Guides
+
+We provide the following detailed guides to help you better use Create Your App:
+
+- [Getting Started](./getting-started.md) - Quickly get started with Create Your App
+- [Configuration](./configuration.md) - Learn about the configuration options of Create Your App
+- [Development Environment](./development.md) - Set up the development environment and workflow
+- [Versioning Strategy](./versioning.md) - Understand our versioning and release process
+
+## Technology Stack
+
+Create Your App is built on the following technologies:
+
+- Node.js
+- TypeScript
+- Commander.js (command-line parsing)
+- Inquirer.js (interactive command line)
+- fs-extra (file operations)
 
 ## Contributing
 
-We welcome contributions to Create Your App! If you have ideas for new templates or features, please feel free to open an issue or submit a pull request on [GitHub](https://github.com/real-jacket/create-your-app).
+Contributions and suggestions are welcome! Please check the [GitHub repository](https://github.com/real-jacket/create-your-app) for more information.

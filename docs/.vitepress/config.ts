@@ -29,7 +29,9 @@ export default defineConfig({
               items: [
                 { text: '介绍', link: '/guide/' },
                 { text: '快速开始', link: '/guide/getting-started' },
-                { text: '配置', link: '/guide/configuration' }
+                { text: '配置', link: '/guide/configuration' },
+                { text: '开发环境配置', link: '/guide/development' },
+                { text: '版本管理策略', link: '/guide/versioning' }
               ]
             }
           ],
@@ -101,7 +103,12 @@ export default defineConfig({
               items: [
                 { text: 'Introduction', link: '/en/guide/' },
                 { text: 'Getting Started', link: '/en/guide/getting-started' },
-                { text: 'Configuration', link: '/en/guide/configuration' }
+                { text: 'Configuration', link: '/en/guide/configuration' },
+                {
+                  text: 'Development Environment',
+                  link: '/en/guide/development'
+                },
+                { text: 'Versioning Strategy', link: '/en/guide/versioning' }
               ]
             }
           ],
