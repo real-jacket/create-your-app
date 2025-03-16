@@ -1,42 +1,35 @@
-# 模板概览
+# 模板列表
 
 Create Your App 提供了多种项目模板，满足不同的开发需求。
 
-## 内置模板
+## React 模板
 
-### React 模板
+- [React Webpack 模板](/templates/react-webpack) - 基于 Webpack 的 React 项目模板
+- [React CRA TypeScript H5 模板](/templates/react-cra-ts-h5) - 基于 Create React App 的 TypeScript H5 项目模板
+- [React Vite H5 模板](/templates/react-vite-h5) - 基于 Vite 的 React H5 项目模板
+- [React Vite Admin 模板](/templates/react-vite-admin) - 基于 Vite 的 React 管理后台项目模板
 
-- [React Webpack](/templates/react-webpack) - 基于 webpack + js 的 React 项目
-- [React CRA TypeScript H5](/templates/react-cra) - 基于 create-react-app + craco + typescript + h5 的项目
-- [React Vite H5](/templates/react-vite) - 基于 vite + typescript 的 H5 项目
-- [React Vite Admin](/templates/react-vite-admin) - 基于 vite + typescript 的管理后台项目
+## 库模板
 
-### 库模板
+- [库模板](/templates/lib) - 用于创建 JavaScript/TypeScript 库的模板
+- [Monorepo 库模板](/templates/lib-monorepo) - 用于创建基于 Monorepo 的多包库的模板
 
-- [库模板](/templates/lib) - 基于 rollup + typescript 的库模板
-- [Monorepo 库模板](/templates/lib-monorepo) - 基于 pnpm + typescript 的 monorepo 库模板
+## 使用方法
 
-## 使用模板
-
-### 通过命令行使用
+使用 Create Your App CLI 创建项目：
 
 ```bash
-# 使用默认模板（React Webpack）
-cya create my-app
+# 基本用法
+npx @rjkt/create-your-app create my-app
 
-# 使用指定模板
-cya create my-app -t @rjkt/cya-react-cra-ts-h5-template
+# 指定模板
+npx @rjkt/create-your-app create my-app --template react-webpack
+
+# 或使用简写命令
+npx @rjkt/create-your-app react my-app
 ```
 
-### 通过快捷命令使用
-
-```bash
-# 使用 create-react-app 创建 React 项目
-cya react my-app
-
-# 使用 vite 创建 Vue 项目
-cya vue my-app
-```
+查看每个模板的详细文档，了解更多信息。
 
 ## 创建自定义模板
 
