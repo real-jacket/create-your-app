@@ -36,6 +36,15 @@ Create Your App 是一个 CLI 工具，旨在简化前端开发的初始化过�
 
 Create Your App 的设计理念是"降低前置成本"。在前端开发中，项目初始化、工具配置等前置工作往往占用了大量时间，而这些工作又是重复性的。Create Your App 通过自动化这些过程，让开发者能够更快地进入实际业务开发。
 
+## 文档指南
+
+我们提供了以下详细指南，帮助您更好地使用 Create Your App：
+
+- [快速开始](./getting-started.md) - 快速上手 Create Your App
+- [配置](./configuration.md) - 了解 Create Your App 的配置选项
+- [开发环境配置](./development.md) - 设置开发环境和工作流
+- [版本管理策略](./versioning.md) - 了解我们的版本管理和发布流程
+
 ## 技术栈
 
 Create Your App 基于以下技术构建：
