@@ -1,0 +1,23 @@
+# VitePress 构建输出
+.vitepress/dist
+.vitepress/cache
+
+# 依赖
+node_modules
+
+# 日志
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+.temp/
+.tmp/
+
+# 环境变量
+.env
+.env.local 
