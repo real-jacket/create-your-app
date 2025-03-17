@@ -14,7 +14,21 @@
     "commit": "git cz",
     "ci:publish": "pnpm -r build && changeset publish",
     "clear": "rimraf 'packages/*/{lib,node_modules}' && rimraf node_modules",
-    "lint": "eslint --ext .ts,.tsx,.js,.jsx . --fix"
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx . --fix",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "test": "pnpm -r test",
+    "clean": "rm -rf node_modules && pnpm -r exec rimraf dist lib .turbo node_modules",
+    "docs:dev": "pnpm --filter=docs dev",
+    "docs:build": "pnpm --filter=docs build",
+    "build:all": "pnpm -r build",
+    "update-templates": "node scripts/update-templates.js",
+    "analyze": "pnpm -r analyze",
+    "check-deps": "npx depcheck",
+    "check-updates": "npx npm-check-updates",
+    "size": "pnpm -r size"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.5",
@@ -28,17 +42,26 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.8",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
+    "turbo": "^1.12.4",
     "typescript": "^5.1.6"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  }
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.6.0"
 }

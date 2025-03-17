@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": [
+    "**/template/**/*",
+    "**/packages/*/template/**/*",
+    "**/packages/create-your-app/component/**/*",
+    "**/lib/**",
+    "**/node_modules/**",
+    "**/dist/**"
+  ],
+  "references": [
+    {
+      "path": "./packages/create-your-app"
+    }
+  ],
+  "files": []
+}

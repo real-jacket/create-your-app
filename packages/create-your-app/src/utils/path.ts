@@ -1,9 +1,13 @@
 import path from 'path';
-import inquire from 'inquirer';
-import fs from 'fs-extra';
+
 import camelcase from 'camelcase';
-import replace from 'replace-in-file';
 import chalk from 'chalk';
+import fsExtra from 'fs-extra';
+import inquirer from 'inquirer';
+import replace from 'replace-in-file';
+
+const { ensureDir, existsSync, readdirSync, remove, statSync } = fsExtra;
+const { prompt } = inquirer;
 
 /**
  * 获取组件模版存放目录
@@ -34,11 +38,11 @@ export function cwdPath(...args: string[]) {
  * @param {boolean} force
  */
 export async function checkDir(targetDir: string, force: boolean) {
-  if (fs.existsSync(targetDir)) {
+  if (existsSync(targetDir)) {
     if (force) {
-      await fs.remove(targetDir);
+      await remove(targetDir);
     } else {
-      const { action } = await inquire.prompt([
+      const { action } = await prompt<{ action: boolean }>([
         {
           type: 'confirm',
           name: 'action',
@@ -48,12 +52,12 @@ export async function checkDir(targetDir: string, force: boolean) {
       ]);
 
       if (action) {
-        await fs.remove(targetDir);
+        await remove(targetDir);
       } else {
         let i = 1;
         let latestDir = targetDir + '1';
         // 存在则目录名递增
-        while (fs.existsSync(latestDir)) {
+        while (existsSync(latestDir)) {
           latestDir = targetDir + `${++i}`;
         }
         targetDir = latestDir;
@@ -61,7 +65,8 @@ export async function checkDir(targetDir: string, force: boolean) {
     }
   }
 
-  fs.ensureDir(targetDir);
+  // 确保目录存在，并等待操作完成
+  await ensureDir(targetDir);
   return targetDir;
 }
 
@@ -74,12 +79,16 @@ export function updateFiles(rootApp: string, appName: string) {
   const appPascalName = camelcase(appName, { pascalCase: true });
 
   try {
+    // 使用 glob 模式匹配文件
+    const files = [
+      path.join(rootApp, 'src', '**/*'),
+      path.join(rootApp, 'public', '/*'),
+      path.join(rootApp, 'README.md')
+    ];
+
+    // 替换模板中的占位符
     replace.sync({
-      files: [
-        path.join(rootApp, 'src', '**/*'),
-        path.join(rootApp, 'public', '/*'),
-        path.join(rootApp, 'README.md')
-      ],
+      files,
       from: [/Template/g, /<%= appName %>/g],
       to: [appPascalName, appName],
       ignore: ['**/mode_modules/**']
@@ -101,21 +110,21 @@ export function traverseFile(
   isContinue: (abPath: string) => boolean = () => true
 ) {
   // 遍历目录
-  for (const abPath of fs.readdirSync(filePath)) {
-    const path = `${filePath}/${abPath}`;
+  for (const abPath of readdirSync(filePath)) {
+    const pathStr = `${filePath}/${abPath}`;
 
     // 判断是否继续遍历
-    if (!isContinue(path)) {
+    if (!isContinue(pathStr)) {
       continue;
     }
 
     // 判断是否为目录
-    if (fs.statSync(path).isDirectory()) {
+    if (statSync(pathStr).isDirectory()) {
       // 如果是目录，则递归遍历
-      traverseFile(path, onFile, isContinue);
+      traverseFile(pathStr, onFile, isContinue);
     } else {
       // 如果是文件，则处理文件
-      onFile(path);
+      onFile(pathStr);
     }
   }
 }

@@ -1,152 +1,43 @@
-import inquire from 'inquirer';
-import fs from 'fs-extra';
-import path from 'path';
-import chalk from 'chalk';
 import os from 'os';
+import path from 'path';
+
+import chalk from 'chalk';
+import fs from 'fs-extra';
+const { copySync, existsSync, writeFileSync } = fs;
+import inquirer from 'inquirer';
+const { prompt } = inquirer;
+import ora from 'ora';
+
 import {
   tryGitInit,
   tryGitCommit,
   createGitIgnore,
   makeHookExecutable
 } from './git';
-import { createPackageJson, pkgDownload } from './pkg';
 import { checkDir, cwdPath, updateFiles } from './path';
-import ora from 'ora';
+import { createPackageJson, pkgDownload } from './pkg';
 
-/**
- * 项目配置
- */
-const config = {
-  framework: null,
-  pkgManagement: null,
-  platform: null,
-  router: null,
-  dataFlow: null
-};
+// 定义 TemplatePkgJson 接口
+interface KV {
+  [key: string]: string;
+}
 
-/**
- * 输入配置
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function input(options: { template: string; force: boolean }) {
-  const { template } = options;
+// 定义 AppPackage 接口
+interface AppPackage {
+  name: string;
+  scripts?: KV;
+  dependencies?: KV;
+  devDependencies?: KV;
+  [key: string]: unknown;
+}
 
-  const answers = await inquire.prompt([
-    {
-      type: 'list',
-      name: 'pkgManagement',
-      choices: [
-        {
-          name: 'npm',
-          value: 'npm'
-        },
-        {
-          name: 'yarn',
-          value: 'yarn'
-        },
-        {
-          name: 'pnpm',
-          value: 'pnpm'
-        }
-      ],
-      default: 'yarn'
-    },
-    {
-      type: 'list',
-      name: 'framework',
-      choices: [
-        {
-          name: 'react',
-          value: 'react'
-        },
-        {
-          name: 'react-ts',
-          value: ['react', 'ts']
-        },
-        {
-          name: 'vue',
-          value: 'vue'
-        },
-        {
-          name: 'vue-ts',
-          value: ['react', 'ts']
-        },
-        {
-          name: 'package-js',
-          value: 'commonjs'
-        },
-        {
-          name: 'package-ts',
-          value: ['commonjs', 'ts']
-        }
-      ],
-      message: 'choose the framework',
-      default: 'react',
-      when: () => !template
-    },
-    {
-      type: 'list',
-      name: 'platform',
-      choices: [
-        {
-          name: 'create-your-app',
-          value: 'cya'
-        },
-        {
-          name: 'webpack',
-          value: 'webpack'
-        },
-        {
-          name: 'create-react-app',
-          value: 'cra'
-        },
-        {
-          name: 'vite',
-          value: 'vite'
-        },
-        { name: 'rollup', value: 'rollup' }
-      ],
-      message: 'choose the bundle tool',
-      default: 'cya',
-      when: () => !template
-    },
-    {
-      type: 'list',
-      name: 'framework',
-      choices: [
-        {
-          name: 'react',
-          value: 'react'
-        },
-        {
-          name: 'react-ts',
-          value: ['react', 'ts']
-        },
-        {
-          name: 'vue',
-          value: 'vue'
-        },
-        {
-          name: 'vue-ts',
-          value: ['react', 'ts']
-        },
-        {
-          name: 'package-js',
-          value: 'commonjs'
-        },
-        {
-          name: 'package-ts',
-          value: ['commonjs', 'ts']
-        }
-      ],
-      message: 'choose the framework',
-      default: 'react',
-      when: () => !template
-    }
-  ]);
-
-  Object.assign(config, answers);
-  return answers;
+interface TemplatePkgJson {
+  package: {
+    scripts: KV;
+    dependencies: KV;
+    devDependencies: KV;
+    [key: string]: any;
+  };
 }
 
 export default async function (
@@ -154,12 +45,14 @@ export default async function (
   options: { force: boolean; template?: string }
 ) {
   // 首先确定输入目录名
-  const { appName } = await inquire.prompt({
-    type: 'input',
-    name: 'appName',
-    message: 'create dir name',
-    default: name || 'new-app'
-  });
+  const { appName } = await prompt<{ appName: string }>([
+    {
+      type: 'input',
+      name: 'appName',
+      message: 'create dir name',
+      default: name || 'new-app'
+    }
+  ]);
 
   // 当前命令行选择的目录
   const cwd = cwdPath();
@@ -169,9 +62,6 @@ export default async function (
 
   // 判断目录是否存在，并返回最终的目录路径
   rootApp = await checkDir(rootApp, options.force);
-
-  // 确定项目配置
-  // const { platform } = await input(options);
 
   // 模版名称
   const { template } = options;
@@ -188,7 +78,9 @@ export default async function (
     templateToInstall = localTemplatePath;
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { name } = require(path.join(localTemplatePath, 'package.json'));
+    const { name } = require(path.join(localTemplatePath, 'package.json')) as {
+      name: string;
+    };
 
     templateName = name;
   } else {
@@ -218,7 +110,7 @@ export default async function (
   try {
     if (template?.match(/^((.{1,2})?\/|file:).*/)) {
       templatePath = path.join(process.cwd(), path.basename(templateToInstall));
-      fs.copySync(templateToInstall, templatePath, { recursive: true });
+      copySync(templateToInstall, templatePath, { recursive: true });
     } else {
       templatePath = await pkgDownload(templateToInstall);
     }
@@ -246,13 +138,17 @@ export default async function (
     }
   };
 
-  if (fs.existsSync(templateJsonPath)) {
-    templateJson = require(templateJsonPath);
+  if (existsSync(templateJsonPath)) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    templateJson = require(templateJsonPath) as TemplatePkgJson;
   }
 
   // 项目的 package.json
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const appPackage = require(path.resolve(rootApp, 'package.json'));
+  const appPackage = require(path.resolve(
+    rootApp,
+    'package.json'
+  )) as AppPackage;
 
   // template package 默认配置，会用一个 package key 包一层
   const templatePackage = templateJson.package || {};
@@ -300,7 +196,7 @@ export default async function (
       delete appPackage[key];
 
       appPackage[key] = {
-        ...temp,
+        ...((temp as Record<string, unknown>) || {}),
         ...templatePackage[key]
       };
     } else {
@@ -308,13 +204,13 @@ export default async function (
     }
   });
 
-  fs.writeFileSync(
+  writeFileSync(
     path.join(rootApp, 'package.json'),
     JSON.stringify(appPackage, null, 2) + os.EOL
   );
 
-  if (fs.existsSync(templateDir)) {
-    fs.copySync(templateDir, rootApp);
+  if (existsSync(templateDir)) {
+    copySync(templateDir, rootApp);
   } else {
     console.log(
       chalk.red(`Error: 从模板 ${templateName} 复制内容到 ${appName} 失败`)

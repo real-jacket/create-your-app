@@ -1,4 +1,22 @@
+# 构建输出
 /packages/*/lib
-/packages/*/template
+/packages/*/dist
+
+# 忽略 template 包的 eslint 配置文件
+packages/template/.eslintrc.js
+packages/template/**/*
+
+# 测试文件
 /packages/*/test
+
+# CLI 工具的组件模板
 /packages/create-your-app/component
+
+# 所有项目模板的模板目录
+/packages/react-cra-ts-h5-template/template
+/packages/react-webpack-template/template
+/packages/react-vite-admin-template/template
+/packages/lib-monorepo-template/template
+/packages/lib-template/template
+/packages/react-vite-h5-template/template
+/packages/template

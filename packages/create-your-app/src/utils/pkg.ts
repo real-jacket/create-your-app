@@ -1,13 +1,25 @@
-import spawn from 'cross-spawn';
-import { NpmRegistry, TaobaoNpmRegistry } from './constants';
-import { exec } from 'shelljs';
-import fs from 'fs-extra';
-import path from 'path';
-import chalk from 'chalk';
 import os from 'os';
-import npmFetch from 'npm-registry-fetch';
+import path from 'path';
+
+import chalk from 'chalk';
+import * as crossSpawn from 'cross-spawn';
+import fs from 'fs-extra';
 import fetch from 'node-fetch';
-import tar from 'tar';
+import npmFetch from 'npm-registry-fetch';
+import ora from 'ora';
+import * as shell from 'shelljs';
+import * as tar from 'tar';
+
+import { NpmRegistry } from './constants';
+
+const { exec } = shell;
+const { sync } = crossSpawn;
+
+// 定义 spawn 返回值类型
+interface SpawnResult {
+  status: number | null;
+  [key: string]: unknown;
+}
 
 /**
  * 创建基础的 package.json
@@ -53,39 +65,35 @@ function createPackageJson(
 }
 
 /**
- *
- * @param {Array} deps 需要安装的依赖
- * @param {Function} error 安装失败的错误回调
- * @param {Array} options 安装参数
+ * 添加依赖
+ * @param deps 依赖列表
+ * @param callback 回调函数
  */
-function pkgAdd(
-  deps: string[],
-  error: () => void,
-  options: Array<unknown> = []
-) {
-  console.log(`Install ${chalk.cyan(deps.join(','))} ...`);
+function pkgAdd(deps: string[], callback?: () => void) {
+  const spinner = ora({
+    text: `Installing ${chalk.cyan(deps.join(' '))}...`,
+    color: 'yellow'
+  }).start();
 
-  const child = spawn.sync(
-    'yarn',
-    ['add', ...deps, ...options, '--registry', TaobaoNpmRegistry],
-    {
-      stdio: 'inherit'
-    }
-  );
+  const child = sync('yarn', ['add', ...deps], {
+    stdio: 'pipe'
+  }) as unknown as SpawnResult;
 
   if (child.status !== 0) {
-    console.log(chalk.red(`Error: yarn add ${deps.join('.')} error`));
-    error?.();
-    process.exit(1);
+    spinner.fail(`Install ${chalk.cyan(deps.join(' '))} fail`);
+    callback && callback();
+    return;
   }
+
+  spinner.succeed(`Install ${chalk.cyan(deps.join(' '))} success`);
 }
 
 function pkgRemove(deps: string[], error: () => void) {
   console.log(`\nRemoving ${chalk.cyan(deps.join(','))}...`);
 
-  const child = spawn.sync('yarn', ['remove', ...deps], {
+  const child = sync('yarn', ['remove', ...deps], {
     stdio: 'inherit'
-  });
+  }) as unknown as SpawnResult;
 
   if (child.status !== 0) {
     console.log(chalk.red(`Error: yarn remove ${deps.join(',')} failed`));
@@ -157,9 +165,10 @@ async function pkgDownload(pkgName: string, version?: string): Promise<string> {
 
   res.body?.pipe(file);
 
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     file.on('finish', () => {
       file.close();
+
       tar
         .x({
           file: 'package.tgz'

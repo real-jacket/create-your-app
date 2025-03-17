@@ -12,13 +12,17 @@
     "cya"
   ],
   "description": "A cli tool for creating your web app",
+  "type": "commonjs",
   "bin": {
     "create-your-app": "./lib/cya.js",
     "cya": "./lib/cya.js"
   },
   "scripts": {
     "start": "rimraf .tsbuildinfo && tsc -p tsconfig.json --watch",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json --skipLibCheck",
+    "test": "jest --config jest.config.cjs",
+    "test:watch": "jest --config jest.config.cjs --watch",
+    "test:coverage": "jest --config jest.config.cjs --coverage"
   },
   "publishConfig": {
     "access": "public"
@@ -47,7 +51,7 @@
     "ejs": "^3.1.6",
     "fs-extra": "^10.1.0",
     "ignore": "^5.2.4",
-    "inquirer": "^8.2.2",
+    "inquirer": "^8.2.5",
     "micromatch": "^4.0.5",
     "node-fetch": "^2.6.7",
     "npm-registry-fetch": "^14.0.5",
@@ -58,9 +62,17 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
     "@types/fs-extra": "^9.0.13",
+    "@types/inquirer": "^8.2.6",
+    "@types/jest": "^29.5.0",
     "@types/micromatch": "^4.0.2",
     "@types/node": "^18.0.0",
-    "@types/npm-registry-fetch": "^8.0.4"
+    "@types/node-fetch": "^2.6.12",
+    "@types/npm-registry-fetch": "^8.0.4",
+    "@types/shelljs": "^0.8.15",
+    "@types/tar": "^6.1.13",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0"
   }
 }

@@ -1,26 +1,54 @@
 import path from 'path';
-import fs from 'fs-extra';
-import ignore, { Ignore } from 'ignore';
+
+import chalk from 'chalk';
+import fsextra from 'fs-extra';
+import ignore from 'ignore';
+import ora from 'ora';
+
+import { getCurDirectory, getGitRemoteUrl } from './git';
 import { traverseFile } from './path';
 import { createPackageJson } from './pkg';
-import ora from 'ora';
-import chalk from 'chalk';
-import { getCurDirectory, getGitRemoteUrl } from './git';
 
-export async function createOrUpdateTemplate(
+import type { Ignore } from 'ignore';
+
+const {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readJsonSync,
+  writeFileSync
+} = fsextra;
+
+// 添加PackageJson接口定义
+interface PackageJson {
+  [key: string]: unknown;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+}
+
+// 添加TemplateJson接口定义
+interface TemplateJson {
+  package: {
+    [key: string]: unknown;
+    dependencies?: Record<string, string>;
+  };
+}
+
+export function createOrUpdateTemplate(
   sourceTemplatePath: string,
   targetTemplatePath: string,
   name?: string
 ) {
-  const isCreated = !fs.existsSync(targetTemplatePath);
+  const isCreated = !existsSync(targetTemplatePath);
   const packagePAth = path.join(targetTemplatePath, 'package.json');
   let templateName;
 
   if (isCreated) {
     templateName = name || path.basename(sourceTemplatePath);
   } else {
-    const pkgJson = await fs.readFileSync(packagePAth, 'utf-8');
-    templateName = JSON.parse(pkgJson).name;
+    const pkgJson = readJsonSync(packagePAth) as { name: string };
+    templateName = pkgJson.name;
   }
 
   const spinner = ora({
@@ -34,8 +62,8 @@ export async function createOrUpdateTemplate(
   // 读取 .gitignore 文件内容
   let data: string | Ignore | readonly (string | Ignore)[];
 
-  if (fs.existsSync(gitIgnorePath)) {
-    data = await fs.readFile(gitIgnorePath, 'utf8');
+  if (existsSync(gitIgnorePath)) {
+    data = readFileSync(gitIgnorePath, 'utf8');
   } else {
     data = ['node_modules', 'dist', 'coverage', '.DS_Store', '*lock*'];
   }
@@ -49,7 +77,7 @@ export async function createOrUpdateTemplate(
   // 遍历模板文件
   traverseFile(
     sourceTemplatePath,
-    async (abPath: string) => {
+    (abPath: string) => {
       // 获取源文件路径目录名
       const relativePath = path.relative(sourceTemplatePath, abPath);
 
@@ -60,12 +88,12 @@ export async function createOrUpdateTemplate(
       const targetDirectory = path.dirname(targetFileName);
 
       // 使用 fs 模块检查目标目录是否存在，如果不存在则创建
-      if (!fs.existsSync(targetDirectory)) {
-        fs.mkdirSync(targetDirectory, { recursive: true });
+      if (!existsSync(targetDirectory)) {
+        mkdirSync(targetDirectory, { recursive: true });
       }
       try {
         // 使用 fs 模块拷贝文件
-        fs.copyFileSync(abPath, targetFileName);
+        copyFileSync(abPath, targetFileName);
       } catch (error) {
         if (error) {
           console.error('拷贝文件出错:', error);
@@ -85,30 +113,30 @@ export async function createOrUpdateTemplate(
   );
 
   // 处理 .ignore 文件
-  fs.renameSync(
+  writeFileSync(
     path.join(templatePath, '.gitignore'),
-    path.join(templatePath, 'gitignore')
+    readFileSync(path.join(templatePath, 'gitignore'))
   );
 
   // 创建 package.json
 
-  if (!fs.existsSync(packagePAth)) {
-    createPackageJson(targetTemplatePath, templateName, {
+  if (!existsSync(packagePAth)) {
+    createPackageJson(targetTemplatePath, templateName as string, {
       files: ['template', 'template.json'],
       repository: {
         type: 'git',
-        url: getGitRemoteUrl(targetTemplatePath),
-        directory: getCurDirectory(targetTemplatePath)
+        url: getGitRemoteUrl(),
+        directory: getCurDirectory()
       }
     });
   }
 
   // 处理源模板 package.json 文件，生成 template.json
-  const pkgJson = JSON.parse(
-    fs.readFileSync(path.join(templatePath, 'package.json')).toString()
-  );
+  const pkgJson = readJsonSync(
+    path.join(templatePath, 'package.json')
+  ) as PackageJson;
 
-  const templateJson = {
+  const templateJson: TemplateJson = {
     package: {}
   };
 
@@ -137,18 +165,34 @@ export async function createOrUpdateTemplate(
     'publishConfig'
   ];
 
-  Object.keys(pkgJson).forEach((key) => {
+  Object.keys(pkgJson).forEach((key: string) => {
     if (templatePackageBlackList.indexOf(key) === -1) {
-      templateJson.package[key] = pkgJson[key];
+      templateJson.package[key] = pkgJson[key as keyof PackageJson];
     }
   });
 
-  fs.writeFileSync(
+  // 更新 package.json 中的依赖
+  if (templateJson.package && pkgJson.dependencies) {
+    Object.keys(pkgJson.dependencies).forEach((key) => {
+      if (!templateJson.package.dependencies) {
+        templateJson.package.dependencies = {};
+      }
+      const depValue = pkgJson.dependencies?.[key];
+      if (depValue) {
+        templateJson.package.dependencies[key] = depValue;
+      }
+    });
+  }
+
+  writeFileSync(
     path.join(targetTemplatePath, 'template.json'),
     JSON.stringify(templateJson, null, 2)
   );
 
-  fs.rmSync(path.join(templatePath, 'package.json'));
+  writeFileSync(
+    path.join(templatePath, 'package.json'),
+    JSON.stringify(pkgJson, null, 2)
+  );
 
   spinner.succeed(
     `${isCreated ? '创建' : '更新'}模板${chalk.green(templateName)}成功！`

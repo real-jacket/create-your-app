@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+
 import chalk from 'chalk';
 /**
  * 支持的 cli 列表
@@ -32,7 +33,7 @@ function cli(options: unknown[]) {
     console.log(shell);
     execSync(shell, { stdio: 'inherit' });
   } catch (error) {
-    console.log(`cya ${options.join(' ')} fail:`, chalk.red(error.message));
+    console.log(`cya ${options.join(' ')} fail:`, chalk.red(String(error)));
   }
 }
 

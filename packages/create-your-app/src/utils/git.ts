@@ -1,8 +1,20 @@
-import chalk from 'chalk';
 import { execSync } from 'child_process';
-import fs from 'fs-extra';
 import path from 'path';
+
+import chalk from 'chalk';
+import fsextra from 'fs-extra';
+const {
+  appendFileSync,
+  existsSync,
+  moveSync,
+  readFileSync,
+  removeSync,
+  unlinkSync
+} = fsextra;
 import ora from 'ora';
+import * as shell from 'shelljs';
+
+const { exec } = shell;
 
 function isInGitRepository() {
   try {
@@ -18,7 +30,7 @@ function isInGitRepository() {
       spinner.color = 'yellow';
       spinner.text = '...';
       process.chdir('../');
-      fs.removeSync(cwd);
+      removeSync(cwd);
       spinner.stop();
       spinner.succeed('撤销成功');
       process.exit(1);
@@ -51,8 +63,12 @@ function tryGitInit(): boolean {
 
     execSync('git init', { stdio: 'ignore' });
     return true;
-  } catch (e) {
-    console.warn('Git repo not initialized', e);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.warn('Git repo not initialized', error.message);
+    } else {
+      console.warn('Git repo not initialized', String(error));
+    }
     return false;
   }
 }
@@ -71,8 +87,12 @@ function tryGitCommit(): boolean {
       stdio: 'ignore'
     });
     return true;
-  } catch (e) {
-    console.log(chalk.red('Git commit failed'));
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(chalk.red('Git commit failed'), error.message);
+    } else {
+      console.log(chalk.red('Git commit failed'), String(error));
+    }
     console.log(chalk.green('Please handle error and try commit again'));
     // We couldn't commit in already initialized git repo,
     // maybe the commit author config is not set.
@@ -96,19 +116,16 @@ function tryGitCommit(): boolean {
  * @param {string} appPath
  */
 function createGitIgnore(appPath: string) {
-  const gitignoreExists = fs.existsSync(path.join(appPath, '.gitignore'));
+  const gitignoreExists = existsSync(path.join(appPath, '.gitignore'));
   if (gitignoreExists) {
     // Append if there's already a `.gitignore` file there
-    const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-    fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-    fs.unlinkSync(path.join(appPath, 'gitignore'));
+    const data = readFileSync(path.join(appPath, 'gitignore'));
+    appendFileSync(path.join(appPath, '.gitignore'), data);
+    unlinkSync(path.join(appPath, 'gitignore'));
   } else {
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
     // See: https://github.com/npm/npm/issues/1862
-    fs.moveSync(
-      path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore')
-    );
+    moveSync(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'));
   }
 }
 /**
@@ -116,14 +133,20 @@ function createGitIgnore(appPath: string) {
  * @param {string} hookPath
  */
 function makeHookExecutable(hookPath: string) {
-  if (!fs.existsSync(hookPath)) return;
-  const files = fs.readdirSync(hookPath);
+  if (!existsSync(hookPath)) return;
+
+  // 使用 shell.ls 获取文件列表
+  const files = shell.ls(hookPath);
+
   let error = false;
   files.forEach((file) => {
     const filePath = path.join(hookPath, file);
-    if (fs.statSync(filePath).isFile()) {
+
+    // 检查文件是否存在且可执行
+    if (shell.test('-f', filePath)) {
       try {
-        fs.chmodSync(filePath, '755');
+        // 设置可执行权限
+        shell.chmod(755, filePath);
       } catch (err) {
         console.log(
           chalk.red(`Failed to set executable permissions for ${filePath}`)
@@ -144,60 +167,44 @@ function makeHookExecutable(hookPath: string) {
   }
 }
 
-function getCurDirectory(target: string): string {
-  let relativePath: string = '';
-
-  const currentDir = process.cwd();
-  process.chdir(target);
-
+/**
+ * 获取 git 子目录
+ * @returns git 子目录
+ */
+export function getCurDirectory() {
   try {
-    // 执行Git命令以获取Git仓库的根目录
-    const repoDir = execSync('git rev-parse --show-toplevel', {
-      encoding: 'utf-8'
-    }).trim();
-
-    // 计算当前目录相对于Git仓库根目录的子路径
-    relativePath = repoDir === target ? '.' : path.relative(repoDir, target);
-  } catch (error) {
-    console.error('获取 git 子目录失败：', error.message);
+    const { stdout } = exec('git rev-parse --show-prefix', {
+      silent: true
+    });
+    return stdout.trim();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('获取 git 子目录失败：', error.message);
+    } else {
+      console.error('获取 git 子目录失败：', String(error));
+    }
+    return '';
   }
-
-  // 切换回当前目录
-  process.chdir(currentDir);
-
-  return relativePath;
 }
 
-function getGitRemoteUrl(target: string): string {
-  const currentDir = process.cwd();
-
-  let remoteURL: string = '';
-  // 切换到指定目录
-  process.chdir(target);
-
+/**
+ * 获取 git 远程仓库地址
+ * @returns git 远程仓库地址
+ */
+export function getGitRemoteUrl() {
   try {
-    // 执行Git命令以获取远程仓库的URL
-    remoteURL = execSync('git config --get remote.origin.url', {
-      encoding: 'utf-8'
-    }).trim();
-  } catch (error) {
-    console.error('获取 git 远程仓库地址失败：', error.message);
+    const { stdout } = shell.exec('git remote get-url origin', {
+      silent: true
+    });
+    return stdout.trim();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('获取 git 远程仓库地址失败：', error.message);
+    } else {
+      console.error('获取 git 远程仓库地址失败：', String(error));
+    }
+    return '';
   }
-
-  // 转换成 http 地址
-  remoteURL = remoteURL.replace(/git@github.com:/, 'https://github.com/');
-
-  // 切换回当前目录
-  process.chdir(currentDir);
-
-  return remoteURL;
 }
 
-export {
-  tryGitInit,
-  tryGitCommit,
-  createGitIgnore,
-  makeHookExecutable,
-  getCurDirectory,
-  getGitRemoteUrl
-};
+export { tryGitInit, tryGitCommit, createGitIgnore, makeHookExecutable };
