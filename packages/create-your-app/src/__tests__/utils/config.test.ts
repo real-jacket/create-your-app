@@ -11,7 +11,7 @@ import {
   getConfig,
   setConfig,
   getRegistry
-} from '../../utils/config.js';
+} from '../../utils/config';
 
 // Mock fs-extra
 jest.mock('fs-extra');
