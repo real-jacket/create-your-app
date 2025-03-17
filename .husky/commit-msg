@@ -1,4 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx --no -- commitlint --edit "$1"
+echo "🔍 验证提交信息..."
+npx --no -- commitlint --edit $1
+
+# 如果上述命令成功，允许提交
+echo "✅ 提交信息验证通过"
