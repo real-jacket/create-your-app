@@ -4,7 +4,6 @@ export default defineConfig({
   base: '/create-your-app/',
   title: 'Create Your App',
   description: '一个用于创建各种应用模板的工具',
-  ignoreDeadLinks: true,
 
   // 国际化配置
   locales: {
@@ -164,7 +163,14 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/create-your-app/favicon.svg'
+      }
+    ],
     ['meta', { name: 'theme-color', content: '#3178C6' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:title', content: 'Create Your App' }],
@@ -172,7 +178,7 @@ export default defineConfig({
       'meta',
       { name: 'og:description', content: '一个用于创建各种应用模板的工具' }
     ],
-    ['meta', { name: 'og:image', content: '/logo.svg' }]
+    ['meta', { name: 'og:image', content: '/create-your-app/logo.svg' }]
   ],
   themeConfig: {
     logo: '/logo.svg',

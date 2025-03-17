@@ -55,29 +55,29 @@ features:
       <img src="/template-icons/react.svg" alt="React Webpack" class="template-icon" />
       <h3>React Webpack</h3>
       <p>React project template based on Webpack 5</p>
-      <a href="/en/templates/react-webpack" class="template-link">View Details</a>
+      <a href="/create-your-app/en/templates/react-webpack" class="template-link">View Details</a>
     </div>
     <div class="template-card">
       <img src="/template-icons/react.svg" alt="React CRA" class="template-icon" />
       <h3>React CRA</h3>
       <p>H5 project template based on Create React App</p>
-      <a href="/en/templates/react-cra" class="template-link">View Details</a>
+      <a href="/create-your-app/en/templates/react-cra" class="template-link">View Details</a>
     </div>
     <div class="template-card">
       <img src="/template-icons/react.svg" alt="React Vite" class="template-icon" />
       <h3>React Vite</h3>
       <p>React H5 project template based on Vite</p>
-      <a href="/en/templates/react-vite" class="template-link">View Details</a>
+      <a href="/create-your-app/en/templates/react-vite" class="template-link">View Details</a>
     </div>
     <div class="template-card">
       <img src="/template-icons/lib.svg" alt="Library Template" class="template-icon" />
       <h3>Library Template</h3>
       <p>TypeScript library template based on Rollup</p>
-      <a href="/en/templates/lib" class="template-link">View Details</a>
+      <a href="/create-your-app/en/templates/lib" class="template-link">View Details</a>
     </div>
   </div>
   <div class="template-more">
-    <a href="/en/templates/" class="more-link">View All Templates</a>
+    <a href="/create-your-app/en/templates/" class="more-link">View All Templates</a>
   </div>
 </div>
 
