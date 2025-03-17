@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
+  base: '/create-your-app/',
   title: 'Create Your App',
   description: '一个用于创建各种应用模板的工具',
   ignoreDeadLinks: true,
