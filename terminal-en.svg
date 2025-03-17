@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="320" viewBox="0 0 600 320">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="0" dy="4" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a" />
+      <stop offset="100%" stop-color="#2a2a2a" />
+    </linearGradient>
+    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#41B883" />
+      <stop offset="100%" stop-color="#3178C6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Terminal Background -->
+  <rect width="600" height="320" rx="12" fill="url(#bg-gradient)" filter="url(#shadow)" />
+  
+  <!-- Terminal Header -->
+  <rect x="20" y="20" width="560" height="36" rx="6" fill="#333333" />
+  <circle cx="46" cy="38" r="8" fill="#FF5F56" />
+  <circle cx="76" cy="38" r="8" fill="#FFBD2E" />
+  <circle cx="106" cy="38" r="8" fill="#27C93F" />
+  <text x="300" y="38" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#CCCCCC">Terminal</text>
+  
+  <!-- Terminal Content -->
+  <g font-family="Menlo, Monaco, 'Courier New', monospace" font-size="16">
+    <!-- Command Line -->
+    <text x="40" y="90" fill="#CCCCCC">$</text>
+    <text x="60" y="90" fill="url(#text-gradient)">npx @rjkt/create-your-app create my-app</text>
+    
+    <!-- Output Lines -->
+    <text x="40" y="130" fill="#FFFFFF">✓ <tspan fill="#AAAAAA">Initializing project...</tspan></text>
+    <text x="40" y="170" fill="#FFFFFF">✓ <tspan fill="#AAAAAA">Downloading template...</tspan></text>
+    <text x="40" y="210" fill="#FFFFFF">✓ <tspan fill="#AAAAAA">Installing dependencies...</tspan></text>
+    <text x="40" y="250" fill="#FFFFFF">✓ <tspan fill="#AAAAAA">Configuring project...</tspan></text>
+    <text x="40" y="290" fill="url(#text-gradient)" font-weight="bold">✨ Project created successfully! Ready to start development!</text>
+  </g>
+</svg> 

@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as i,aj as t}from"./chunks/framework.CM7BdzdB.js";const y=JSON.parse('{"title":"命令行 API","description":"","frontmatter":{},"headers":[],"relativePath":"api/index.md","filePath":"api/index.md"}'),e={name:"api/index.md"},n=t("",56),p=[n];function l(h,k,c,d,o,r){return i(),a("div",null,p)}const F=s(e,[["render",l]]);export{y as __pageData,F as default};

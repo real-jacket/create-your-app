@@ -1,0 +1,1 @@
+import{_ as a,c as s,o as i,aj as e}from"./chunks/framework.CM7BdzdB.js";const g=JSON.parse('{"title":"配置选项","description":"","frontmatter":{},"headers":[],"relativePath":"api/options.md","filePath":"api/options.md"}'),t={name:"api/options.md"},h=e("",52),p=[h];function l(n,c,o,d,r,k){return i(),s("div",null,p)}const y=a(t,[["render",l]]);export{g as __pageData,y as default};
