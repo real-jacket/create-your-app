@@ -44,7 +44,7 @@ features:
 ## 简单易用的命令行工具
 
 <div class="terminal-container">
-  <img src="/terminal.svg" alt="Terminal Demo" class="terminal-image" />
+  <img src="/create-your-app/terminal.svg" alt="Terminal Demo" class="terminal-image" />
 </div>
 
 ## 丰富的模板选择
@@ -52,32 +52,32 @@ features:
 <div class="template-container">
   <div class="template-grid">
     <div class="template-card">
-      <img src="/template-icons/react.svg" alt="React Webpack" class="template-icon" />
+      <img src="/create-your-app/template-icons/react.svg" alt="React Webpack" class="template-icon" />
       <h3>React Webpack</h3>
       <p>基于 Webpack 5 的 React 项目模板</p>
-      <a href="/templates/react-webpack" class="template-link">查看详情</a>
+      <a href="/create-your-app/templates/react-webpack" class="template-link">查看详情</a>
     </div>
     <div class="template-card">
-      <img src="/template-icons/react.svg" alt="React CRA" class="template-icon" />
+      <img src="/create-your-app/template-icons/react.svg" alt="React CRA" class="template-icon" />
       <h3>React CRA</h3>
       <p>基于 Create React App 的 H5 项目模板</p>
-      <a href="/templates/react-cra" class="template-link">查看详情</a>
+      <a href="/create-your-app/templates/react-cra" class="template-link">查看详情</a>
     </div>
     <div class="template-card">
-      <img src="/template-icons/react.svg" alt="React Vite" class="template-icon" />
+      <img src="/create-your-app/template-icons/react.svg" alt="React Vite" class="template-icon" />
       <h3>React Vite</h3>
       <p>基于 Vite 的 React H5 项目模板</p>
-      <a href="/templates/react-vite" class="template-link">查看详情</a>
+      <a href="/create-your-app/templates/react-vite" class="template-link">查看详情</a>
     </div>
     <div class="template-card">
-      <img src="/template-icons/lib.svg" alt="库模板" class="template-icon" />
+      <img src="/create-your-app/template-icons/lib.svg" alt="库模板" class="template-icon" />
       <h3>库模板</h3>
       <p>基于 Rollup 的 TypeScript 库模板</p>
-      <a href="/templates/lib" class="template-link">查看详情</a>
+      <a href="/create-your-app/templates/lib" class="template-link">查看详情</a>
     </div>
   </div>
   <div class="template-more">
-    <a href="/templates/" class="more-link">查看所有模板</a>
+    <a href="/create-your-app/templates/" class="more-link">查看所有模板</a>
   </div>
 </div>
 
