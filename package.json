@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "docs"
+    "docs",
+    "!packages/template"
   ],
   "author": "real-jacket <1762982273@qq.com>",
   "scripts": {
@@ -63,5 +64,5 @@
     "node": ">=16.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8"
+  "packageManager": "pnpm@8.6.0"
 }
