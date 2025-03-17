@@ -44,6 +44,7 @@
     "lib"
   ],
   "dependencies": {
+    "@types/js-yaml": "^4.0.9",
     "camelcase": "^6.2.0",
     "chalk": "^4.1.0",
     "commander": "^9.2.0",
@@ -52,6 +53,7 @@
     "fs-extra": "^10.1.0",
     "ignore": "^5.2.4",
     "inquirer": "^8.2.5",
+    "js-yaml": "^4.1.0",
     "micromatch": "^4.0.5",
     "node-fetch": "^2.6.7",
     "npm-registry-fetch": "^14.0.5",
