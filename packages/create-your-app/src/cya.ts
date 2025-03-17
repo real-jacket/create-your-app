@@ -79,9 +79,11 @@ program
   .command('package <pkg-name>')
   .description('Create a new package in a monorepo project')
   .option('-f, --force', 'Overwrite target directory if it exists')
-  .option('-d, --dir <directory>', 'Directory to create package in', '.')
+  .option('-d, --dir <directory>', 'Directory to create package in')
   .option('-t, --template <template-path>', 'Template to use', '')
   .option('-s, --scope <scope>', 'Package scope (e.g., @scope/package-name)')
+  .option('-v, --version <version>', 'Initial package version')
+  .option('--description <description>', 'Package description')
   .action(packageCommand);
 
 // Version information
