@@ -1,5 +1,12 @@
 # @rjkt/create-your-app
 
+## 1.1.1
+
+### Patch Changes
+
+- [#35](https://github.com/real-jacket/create-your-app/pull/35) [`b6e088eb`](https://github.com/real-jacket/create-your-app/commit/b6e088eb2a033dff9d3f3acc5953395578b38eb9) Thanks [@real-jacket](https://github.com/real-jacket)! - 优化 cli 代码结构
+  补充完善 package 命令
+
 ## 1.1.0
 
 ### Minor Changes
